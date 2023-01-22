@@ -2,32 +2,41 @@ import logging
 import json
 from flask import Flask, request
 from telegram import Bot, Update
-from telegram.ext import Dispatcher, ContextTypes, MessageHandler, Filters
+from telegram.ext import Application, ContextTypes, MessageHandler, filters
 
-server = Flask(__name__)
+
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
+
 
 BotToken = "5943587962:AAHKiQ2-_TDtDReJd1ac0vZ4413Tpvpr-jU"
 
 
-def echo(update: Update, context: ContextTypes):
-    reaponse = update.effective_message.reply_text(
-        update.effective_message.text
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    reaponse = await update.effective_message.reply_text(
+        update.effective_message.text + ' from render'
     )
 
 
-@server.route("/")
-def hello():
-    response = (Bot(BotToken).send_message(5030058973, 'hello'))
-    return "Hello World!"
+server = Flask(__name__)
 
-@server.route("/webhook", methods=['POST'])
-def Webhook_handler():
-    data = request.stream.read().decode('utf-8')
-    bot = Bot(BotToken)
-    dp = Dispatcher(bot, None, workers=0, use_context=True)
-    dp.add_handler(MessageHandler(Filters.text, echo))
-    update = Update.de_json(json.loads(data), bot)
-    dp.process_update(update)
+
+@server.get('/')
+async def Home():
+    response = (await Bot(BotToken).send_message(5030058973, 'hello' + ' from render'))
+    return 'ok', 200
+
+
+@server.post("/webhook")
+async def Webhook_handler():
+    data = json.loads(request.stream.read().decode('utf-8'))
+    application = Application.builder().token(BotToken).build()
+    application.add_handler(MessageHandler(filters.TEXT, echo))
+    async with application:
+        await application.start()
+        await application.process_update(Update.de_json(data=data, bot=application.bot))
+        await application.stop()
     return 'ok', 200
 
 
