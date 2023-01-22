@@ -1,7 +1,7 @@
 import logging
 import json
 from flask import Flask, request
-from telegram import Bot
+from telegram import Bot, Update
 from telegram.ext import Dispatcher, ContextTypes, MessageHandler, Filters
 
 server = Flask(__name__)
