@@ -1,5 +1,5 @@
 from flask import Flask
-import telegram
+from telegram import Bot
 
 server = Flask(__name__)
 
