@@ -1,5 +1,6 @@
 from flask import Flask
 from telegram import Bot
+from telegram.ext import Dispatcher, ContextTypes, MessageHandler, Filters
 
 server = Flask(__name__)
 
