@@ -1,4 +1,6 @@
 from flask import Flask
+import telegram
+
 server = Flask(__name__)
 
 @server.route("/")
