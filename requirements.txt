@@ -1,2 +1,2 @@
-Flask==2.0.1
+Flask[async]
 python-telegram-bot==20.0
