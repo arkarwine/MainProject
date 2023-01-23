@@ -1,18 +1,14 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from flask import Flask 
 import logging
+import threading
 
-Bot = Client("userbot", "22444092", "bc6c9d84db95809f59bb96af90ccffd3")
+app = Flask(__name__)
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.INFO)
-
-
-@Bot.on_message(filters.text)
-async def echo(bot: Client, update: Message):
-    await update.reply(
-        update.text
-    )
+@app.route('/')
+def Home():
+    return "Hello World !"
 
 
-Bot.run()
+threading.Thread(target=lambda: app.run(host='0.0.0.0')).start()
