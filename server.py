@@ -12,7 +12,7 @@ BotToken = "5943587962:AAHKiQ2-_TDtDReJd1ac0vZ4413Tpvpr-jU"
 
 def echo(update: Update, context: ContextTypes):
     reaponse = update.effective_message.reply_text(
-        update.effective_message.text, ", from Mogenius."
+        update.effective_message.text+ ", from Mogenius."
     )
 
 
