@@ -1,29 +1,37 @@
-from pyrogram import Client, filters
-from pyrogram.types import Message
-from flask import Flask 
-import logging
-import threading
+import json
+from flask import Flask, request
+from telegram import Bot, Update
+from telegram.ext import Dispatcher, ContextTypes, MessageHandler, Filters
+
 
 server = Flask(__name__)
 
-@server.route('/')
-def Home():
-    return "Hello World !!!"
 
-Bot = Client("userbot", "22444092", "bc6c9d84db95809f59bb96af90ccffd3")
-
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.INFO)
+BotToken = "5943587962:AAHKiQ2-_TDtDReJd1ac0vZ4413Tpvpr-jU"
 
 
-@Bot.on_message(filters.text)
-async def echo(bot: Client, update: Message):
-    await update.reply(
-        update.text
+def echo(update: Update, context: ContextTypes):
+    reaponse = update.effective_message.reply_text(
+        update.effective_message.text, ", from Mogenius."
     )
 
 
-threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
+@server.route("/")
+def hello():
+    response = (Bot(BotToken).send_message(5030058973, 'Hi !'))
+    return "Hello World !"
 
 
-Bot.run()
+@server.route("/webhook", methods=['POST'])
+def Webhook_handler():
+    data = request.stream.read().decode('utf-8')
+    bot = Bot(BotToken)
+    dp = Dispatcher(bot, None, workers=0, use_context=True)
+    dp.add_handler(MessageHandler(Filters.text, echo))
+    update = Update.de_json(json.loads(data), bot)
+    dp.process_update(update)
+    return 'ok', 200
+
+
+if __name__ == "__main__":
+   server.run(host='0.0.0.0', port=1337)
