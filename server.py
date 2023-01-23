@@ -4,11 +4,11 @@ from flask import Flask
 import logging
 import threading
 
-app = Flask(__name__)
+server = Flask(__name__)
 
-@app.route('/')
+@server.route('/')
 def Home():
     return "Hello World !"
 
 
-threading.Thread(target=lambda: app.run(host='0.0.0.0')).start()
+threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
