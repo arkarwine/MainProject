@@ -1,35 +1,31 @@
-import json
+from telethon.sync import TelegramClient, events
+from telethon.sessions import StringSession
+from flask import Flask
+import logging
 import threading
-from flask import Flask, request
-from telegram import Bot, Update
-from telegram.ext import Application, ContextTypes, MessageHandler, filters
+
+
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.INFO)
 
 
 server = Flask(__name__)
 
-
-BotToken = "5943587962:AAHKiQ2-_TDtDReJd1ac0vZ4413Tpvpr-jU"
-
-
-async def echo(update: Update, context: ContextTypes):
-    reaponse = await update.effective_message.reply_text(
-        update.effective_message.text
-    )
+@server.route('/')
+def Home():
+    return "Hello from Mogenius !!"
 
 
-@server.route("/")
-def hello():
-    return "Hello World !"
-
-
-def main():
-    APP = Application.builder().token(BotToken).build()
+with TelegramClient(StringSession("1BVtsOH0Bu2OCV08TBRHRvXKONboqEtvdibAbkRZySFIwcKjgDVXhdvPOE5TwmAFTGXcnR3iMhVTI6Ru85qQkJG2xaXjX7PYZQj-slUB9k_Juv3SddRR57c42_wqxnhj6ugatrNZnRs4xfyAydFv5PDFKNiG-75oGnIBWwVypVLP0X7f8hUK9_lCYCP4IwGfX6fWugb__3hsuwVQ5xuaoV47dVBqsEB8E4_eVtWp44Y16CnDZG0Pob2HCLZ9l3DT9cyA8whtfOQiT_W3rqALU0-d3XDKn7Sdg7jV79zxwBPqPCDvMX03NYqqrFTyCAUY3FWGbrN4IBU1RZr85qO4ZM1JSgYWI-Mk="), "22444092", "bc6c9d84db95809f59bb96af90ccffd3") as client:
     
-    APP.add_handler(MessageHandler(filters.TEXT, echo))
+    client.send_message('me', 'me')
 
-    APP.run_polling()
+    @client.on(events.NewMessage)
+    async def my_event_handler(event):
+        await event.reply(event.raw_text)
+    
 
-
-if __name__ == "__main__":
-    threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
-    main()
+    if __name__ == "__main__":
+        threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
+        client.start()
+        client.run_until_disconnected()
