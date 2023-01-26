@@ -44,7 +44,7 @@ async def echo(_, update: Message):
             await app.join_group_call(
                 -1001787879635,
                 AudioPiped(
-                    url,
+                    "https://rr4---sn-hp57yn7y.googlevideo.com/videoplayback?expire=1674760673&ei=gX3SY7CUMIeRigSqwaiwCg&ip=195.181.162.179&id=o-AFIbixrv_WMKeK-kUZxFslJZhXy9s_WXcstJq-wmiN7V&itag=251&source=youtube&requiressl=yes&mh=Ux&mm=31%2C26&mn=sn-hp57yn7y%2Csn-p5qlsn76&ms=au%2Conr&mv=m&mvi=4&pl=23&initcwndbps=640000&spc=H3gIhsCtwGQb55cbYOMsk5gHRIBAwmg&vprv=1&svpuc=1&mime=audio%2Fwebm&gir=yes&clen=3728829&dur=209.581&lmt=1670447586727367&mt=1674738806&fvip=5&keepalive=yes&fexp=24007246&c=ANDROID&txp=5532434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRAIgO5-vYU57mXdAK6GPdDlGtM1ODWBniuCnCclW6P3Z358CIEyVuCYpYcTdgRlVkU25N3Y9kxpiEe1RTaSlc3FNNQyh&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAPXPaYgrFkHFT_mlLocN01yorLhgbe4Tt8K4uCGB8GXxAiBb1pY6FfMnaO2xgWWEdhLYUt5jvWOEVsYp8cCrMXUcHA%3D%3D",
                 )
             )
         except:
