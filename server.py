@@ -19,12 +19,23 @@ async def echo(_, update: Message):
     await update.reply(
         update.text
     )
-    await app.start()
-    await app.join_group_call(
-        -1001787879635,
-        AudioPiped(
-            'http://docs.evostream.com/sample_content/assets/sintel1m720p.mp4',
+    try:
+        await app.start()
+        await update.reply(
+            "Started"
         )
+        await app.join_group_call(
+            -1001787879635,
+            AudioPiped(
+                'http://docs.evostream.com/sample_content/assets/sintel1m720p.mp4',
+            )
+        )
+    except Exception as e:
+        await update.reply(
+            e
+        )
+    await update.reply(
+        "Done"
     )
 
 
