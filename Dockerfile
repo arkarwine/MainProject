@@ -1,7 +1,7 @@
-FROM nikolaik/python-nodejs:python3.9-nodejs16
+FROM python:3.8
 
 RUN apt update && apt upgrade -y
-RUN apt install python3-pip ffmpeg -y
+RUN apt install ffmpeg nodejs -y
 
 RUN pip3 install --upgrade pip
 COPY requirements.txt .
