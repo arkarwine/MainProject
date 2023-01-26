@@ -7,13 +7,6 @@ import threading
 import logging
 
 
-server = Flask(__name__)
-
-@server.route("/")
-def hello():
-    return "Hello World !"
-
-
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)
 
@@ -37,5 +30,4 @@ async def echo(_, update: Message):
 
 
 if __name__ == "__main__":
-    threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
     Bot.run()
