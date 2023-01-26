@@ -9,8 +9,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 1337
-
 USER 1000
 
 CMD [ "python", "./server.py" ]
