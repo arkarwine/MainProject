@@ -1,9 +1,21 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pytgcalls import PyTgCalls
+from pytgcalls import PyTgCalls, idle
 from pytgcalls.types import AudioPiped
+from flask import Flask
+import os
+import re
 import threading
 import logging
+import asyncio
+import threading
+
+
+server = Flask(__name__)
+
+@server.route('/')
+def Home():
+    return "Welcome home !!"
 
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -16,26 +28,36 @@ app = PyTgCalls(Bot)
 
 @Bot.on_message(filters.private)
 async def echo(_, update: Message):
-    await update.reply(
-        update.text
+    term = update.text
+    toEdit = await update.reply(
+        'Starting...'
     )
+    if re.findall(r'^(http|https):\/\/[^ "]+$', term):
+        url = os.popen(f'python -m yt_dlp -g -f "bestaudio" "{term}"').read()
+    else:
+        url = os.popen(f'python -m yt_dlp -g -f "bestaudio" ytsearch1:"{term}"').read()
     try:
-        await app.start()
+        await app.join_group_call(
+            -1001787879635,
+            AudioPiped(
+                url,
+            )
+        )
     except:
-        pass
-    await update.reply(
-        "Started"
-    )
-    await app.join_group_call(
-        -1001787879635,
-        AudioPiped(
-            'http://docs.evostream.com/sample_content/assets/sintel1m720p.mp4',
+        await app.change_stream(
+            -1001787879635,
+            AudioPiped(
+                url,
+            )
         )
-        )
-    await update.reply(
-        "Done"
+    await toEdit.edit(
+        "Started."
     )
 
 
 if __name__ == "__main__":
-    Bot.run()
+    def main():
+        app.start()
+        idle()
+    threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
+    main()
