@@ -37,6 +37,9 @@ async def echo(_, update: Message):
             url = os.popen(f'python -m yt_dlp -g -f "bestaudio" "{term}"').read()
         else:
             url = os.popen(f'python -m yt_dlp -g -f "bestaudio" ytsearch1:"{term}"').read()
+        await update.reply(
+            url
+        )
         try:
             await app.join_group_call(
                 -1001787879635,
