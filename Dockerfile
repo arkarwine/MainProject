@@ -7,6 +7,8 @@ RUN pip3 install --upgrade pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+RUN python -m yt_dlp --rm-cache-dir
+
 COPY . .
 
 EXPOSE 1337
