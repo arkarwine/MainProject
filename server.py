@@ -2,7 +2,6 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from pytgcalls import PyTgCalls
 from pytgcalls.types import AudioPiped
-from flask import Flask
 import threading
 import logging
 
