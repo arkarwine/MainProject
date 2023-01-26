@@ -28,31 +28,36 @@ app = PyTgCalls(Bot)
 
 @Bot.on_message(filters.private)
 async def echo(_, update: Message):
-    term = update.text
-    toEdit = await update.reply(
-        'Starting...'
-    )
-    if re.findall(r'^(http|https):\/\/[^ "]+$', term):
-        url = os.popen(f'python -m yt_dlp -g -f "bestaudio" "{term}"').read()
-    else:
-        url = os.popen(f'python -m yt_dlp -g -f "bestaudio" ytsearch1:"{term}"').read()
     try:
-        await app.join_group_call(
-            -1001787879635,
-            AudioPiped(
-                url,
-            )
+        term = update.text
+        toEdit = await update.reply(
+            'Starting...'
         )
-    except:
-        await app.change_stream(
-            -1001787879635,
-            AudioPiped(
-                url,
+        if re.findall(r'^(http|https):\/\/[^ "]+$', term):
+            url = os.popen(f'python -m yt_dlp -g -f "bestaudio" "{term}"').read()
+        else:
+            url = os.popen(f'python -m yt_dlp -g -f "bestaudio" ytsearch1:"{term}"').read()
+        try:
+            await app.join_group_call(
+                -1001787879635,
+                AudioPiped(
+                    url,
+                )
             )
+        except:
+            await app.change_stream(
+                -1001787879635,
+                AudioPiped(
+                    url,
+                )
+            )
+        await toEdit.edit(
+            "Started."
         )
-    await toEdit.edit(
-        "Started."
-    )
+    except Exception as e:
+        await toEdit.edit(
+            e
+        )
 
 
 if __name__ == "__main__":
@@ -61,3 +66,4 @@ if __name__ == "__main__":
         idle()
     threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
     main()
+
