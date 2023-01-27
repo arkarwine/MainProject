@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from pyrogram.enums import ChatType
 from pytgcalls import PyTgCalls, idle
 from pytgcalls.types import AudioPiped
 from flask import Flask
@@ -23,16 +24,16 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.INFO)
 
 
-Bot = Client(":memory:", "22444092", "bc6c9d84db95809f59bb96af90ccffd3", session_string="BQFWeDwAij1DFjK9HSSJrJnBfh6D88rGZtZIFk3H_3yt9S1QdwiUNiAQoujVh9F1Ktf5urb4g0wTwidSifYAImQ9HGSTmucOPlu59s4X0g5RJBV736bTGHpe_HWK5gvTRYelzgBm-rDzpxiTo-Om0FOyYfC-8MZ1SlSBgU0MaSlgVrP7NT5D2kkvaxNc--AIaCvndvk0GJ2pfMX5batga-lGTwoSbrnal1QXjrl1QIBYimWrCJ8NN6chWH9TMdDFcyuYSZAjazeBuVl0b6Dcz6MtqWGLglKToTZZFOGSp_f_cV2Xa3dmhTWkQWEqdJu5EmmchZkbV5SMa3odAhq4LbaAQpo4IwAAAAFHQ0hsAA", in_memory=True)
+Bot = Client(":memory:", "22444092", "bc6c9d84db95809f59bb96af90ccffd3", session_string="BQFWeDwAoAHBKZ7RqNk8n4DtvrEbXwAL4d96S2mYGig5odNhm5pehM_R88K5tQIkFCj61usu0BDMwDfJvYSNP4TzgcHVYfHFMY-NaRMCIK8dUkVrA8brWGQF31hGhli80O2uOJ7GQh__H9PT3gNbPDEw_YeTdaYtF7ZfYeusuyqXDHsYKHRxBjKxTw7ngObvajK9bUPi5Fib8RbhIet8kXYyRzfGR2L_oyOQkYD-FrR6PEUB58socI-utDvrRJOT38MiMjuHKG61loduIwU_TrQUvba8ZWHoeDZwswxMi2fOkxF2R7nJ-ZP9XjXwLjzU1H9h3JBMc9yQV_ctkMUJcJ_tx9UC5QAAAAFHQ0hsAA",in_memory=True)
 app = PyTgCalls(Bot)
 
 
-@Bot.on_message(filters.c)
+@Bot.on_message(filters.create(lambda _, client, update: all([update.chat.type==ChatType.PRIVATE, update.via_bot, False if not update.text else re.findall(r'.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*', update.text)])))
 async def echo(bot: Client, update: Message):
     try:
         term = re.findall(r'.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*', update.text)[0]
         toEdit = await update.reply(
-            'Starting...'
+            "ခဏစောင့်ပါ..."
         )
 
         url = "https://ytstream-download-youtube-videos.p.rapidapi.com/dl"
@@ -63,7 +64,7 @@ async def echo(bot: Client, update: Message):
                 )
             )
         await toEdit.edit(
-            "Started."
+            f"Streaming {json.loads(response.text)['title']}"
         )
     except Exception as e:
         await toEdit.edit(
