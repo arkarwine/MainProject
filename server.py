@@ -54,18 +54,18 @@ async def echo(bot: Client, update: Message):
             await app.join_group_call(
                 -1001787879635,
                 AudioPiped(
-                    url,
+                    "https://rr3---sn-4g5edn6y.googlevideo.com/videoplayback?expire=1674926944&ei=AAfVY7eOC46ZgQfDyYbYDQ&ip=23.88.39.196&id=o-ACzzbsnIOOGWnGqe13cCJINWbnNPCQjg5lWm7tIgSgRX&itag=251&source=youtube&requiressl=yes&mh=Y5&mm=31%2C29&mn=sn-4g5edn6y%2Csn-4g5lznes&ms=au%2Crdu&mv=m&mvi=3&pl=25&initcwndbps=291250&spc=H3gIhhdRJBLSsi9ns6sAA8dAAdJ5NdM&vprv=1&svpuc=1&mime=audio%2Fwebm&gir=yes&clen=3587634&dur=213.521&lmt=1656732159493183&mt=1674904888&fvip=2&keepalive=yes&fexp=24007246&c=ANDROID&txp=5532434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgDKLAWbm2X5viEjnSMfO36qbpPTiYs5A86EfmvUNTnTYCIQDRFOgcOS2S6zGe18d3LxsGGKzZOPxPQmPgiPDhRD62mQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgEIE8ymdF46QSAdUmrcMtISDdyVXOoTR27YDuHSggmJUCIAUaBe-ugy1zRCVL-rmW-qSgtr0yUw5ktGnVU3jOEEwP",
                 )
             )
         except:
             await app.change_stream(
                 -1001787879635,
                 AudioPiped(
-                    url,
+                    'https://rr3---sn-4g5edn6y.googlevideo.com/videoplayback?expire=1674926944&ei=AAfVY7eOC46ZgQfDyYbYDQ&ip=23.88.39.196&id=o-ACzzbsnIOOGWnGqe13cCJINWbnNPCQjg5lWm7tIgSgRX&itag=251&source=youtube&requiressl=yes&mh=Y5&mm=31%2C29&mn=sn-4g5edn6y%2Csn-4g5lznes&ms=au%2Crdu&mv=m&mvi=3&pl=25&initcwndbps=291250&spc=H3gIhhdRJBLSsi9ns6sAA8dAAdJ5NdM&vprv=1&svpuc=1&mime=audio%2Fwebm&gir=yes&clen=3587634&dur=213.521&lmt=1656732159493183&mt=1674904888&fvip=2&keepalive=yes&fexp=24007246&c=ANDROID&txp=5532434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgDKLAWbm2X5viEjnSMfO36qbpPTiYs5A86EfmvUNTnTYCIQDRFOgcOS2S6zGe18d3LxsGGKzZOPxPQmPgiPDhRD62mQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgEIE8ymdF46QSAdUmrcMtISDdyVXOoTR27YDuHSggmJUCIAUaBe-ugy1zRCVL-rmW-qSgtr0yUw5ktGnVU3jOEEwP',
                 )
             )
         await toEdit.edit(
-            f"Streaming {json.loads(response.text)['title']}"
+            f'Streaming "{json.loads(response.text)["title"]}"'
         )
     except Exception as e:
         await toEdit.edit(
@@ -77,6 +77,6 @@ if __name__ == "__main__":
     def main():
         app.start()
         idle()
-    threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
+    # threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
     main()
 
