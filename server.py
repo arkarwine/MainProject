@@ -52,14 +52,14 @@ async def echo(bot: Client, update: Message):
 
         try:
             await app.join_group_call(
-                -1001787879635,
+                update.chat.id,
                 AudioPiped(
                     url,
                 )
             )
         except:
             await app.change_stream(
-                -1001787879635,
+                update.chat.id,
                 AudioPiped(
                     url,
                 )
