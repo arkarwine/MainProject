@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import uuid
 from telegram import InlineQueryResultCachedPhoto, Update
 from telegram.ext import InlineQueryHandler, Application, ContextTypes
@@ -63,11 +64,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == "__main__":
 
-    application = (
-        Application.builder()
-        .token("5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0")
-        .build()
-    )
+    application = Application.builder().token(os.environ["TOKEN"]).build()
 
     application.add_handler(InlineQueryHandler(main))
 
