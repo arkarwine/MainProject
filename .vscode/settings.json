@@ -10,8 +10,13 @@
     "editor.detectIndentation": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
     },
+    "isort.args": ["--profile", "black"],
     "workbench.iconTheme": "material-icon-theme",
     "git.enableSmartCommit": true,
     "python.formatting.provider": "none",
@@ -20,6 +25,5 @@
     },
     "prettier.tabWidth": 4,
     "python.analysis.autoImportCompletions": true,
-    "python.analysis.completeFunctionParens": true,
-    "path-intellisense.absolutePathToWorkspace": false
+    "python.analysis.completeFunctionParens": true
 }

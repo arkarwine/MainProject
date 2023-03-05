@@ -2,9 +2,9 @@ import json
 import logging
 import os
 import uuid
-from telegram import InlineQueryResultCachedPhoto, Update
-from telegram.ext import InlineQueryHandler, Application, ContextTypes
 
+from telegram import InlineQueryResultCachedPhoto, Update
+from telegram.ext import Application, CommandHandler, ContextTypes, InlineQueryHandler
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -59,13 +59,25 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except IndexError:
             return None
 
-    await update.inline_query.answer(CreateResults, auto_pagination=True, cache_time=1)
+    await update.inline_query.answer(
+        CreateResults,
+        auto_pagination=True,
+        cache_time=1,
+        switch_pm_text="❓Help",
+        switch_pm_parameter="help",
+    )
+
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.effective_message.reply_text("Hi !")
 
 
 if __name__ == "__main__":
 
-    application = Application.builder().token(os.environ["TOKEN"]).build()
+    application = Application.builder().token(os.getenv("TOKEN")).build()
 
     application.add_handler(InlineQueryHandler(main))
+
+    application.add_handler(CommandHandler("start", start))
 
     application.run_polling()
