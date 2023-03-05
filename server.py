@@ -1,82 +1,74 @@
-from pyrogram import Client, filters
-from pyrogram.types import Message
-from pyrogram.enums import ChatType
-from pytgcalls import PyTgCalls, idle
-from pytgcalls.types import AudioPiped
-from flask import Flask
-import requests
-import threading
-import re
-import logging
-import asyncio
-import threading
 import json
+import logging
+import uuid
+from telegram import InlineQueryResultCachedPhoto, Update
+from telegram.ext import InlineQueryHandler, Application, ContextTypes
 
 
-server = Flask(__name__)
-
-@server.route('/')
-def Home():
-    return "Welcome home !!"
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
 
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.INFO)
+async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.inline_query.query.lower()
 
+    def only_uppers(s: str) -> str:
+        upper_chars = ""
+        for char in s:
+            if char.isupper():
+                upper_chars += char
+        return upper_chars
 
-Bot = Client(":memory:", "22444092", "bc6c9d84db95809f59bb96af90ccffd3", session_string="BQFWeDwAij1DFjK9HSSJrJnBfh6D88rGZtZIFk3H_3yt9S1QdwiUNiAQoujVh9F1Ktf5urb4g0wTwidSifYAImQ9HGSTmucOPlu59s4X0g5RJBV736bTGHpe_HWK5gvTRYelzgBm-rDzpxiTo-Om0FOyYfC-8MZ1SlSBgU0MaSlgVrP7NT5D2kkvaxNc--AIaCvndvk0GJ2pfMX5batga-lGTwoSbrnal1QXjrl1QIBYimWrCJ8NN6chWH9TMdDFcyuYSZAjazeBuVl0b6Dcz6MtqWGLglKToTZZFOGSp_f_cV2Xa3dmhTWkQWEqdJu5EmmchZkbV5SMa3odAhq4LbaAQpo4IwAAAAFHQ0hsAA",in_memory=True)
-app = PyTgCalls(Bot)
+    with open("images.json") as f:
+        data = json.loads(f.read())
 
+    subjects = {only_uppers(subject).lower(): data[subject] for subject in data}
 
-@Bot.on_message(filters.create(lambda _, client, update: all([update.chat.type==ChatType.SUPERGROUP, update.via_bot, False if not update.text else re.findall(r'.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*', update.text)])))
-async def echo(bot: Client, update: Message):
-    print(await bot.export_session_string())
-    try:
-        term = re.findall(r'.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*', update.text)[0]
-        toEdit = await update.reply(
-            "ခဏစောင့်ပါ..."
-        )
-
-        url = "https://ytstream-download-youtube-videos.p.rapidapi.com/dl"
-
-        querystring = {"id":term}
-
-        headers = {
-            "X-RapidAPI-Key": "3d28911b5emshfa3878e04bad055p1d8d4ajsn3656fe6360e3",
-            "X-RapidAPI-Host": "ytstream-download-youtube-videos.p.rapidapi.com"
-        }
-
-        response = requests.request("GET", url, headers=headers, params=querystring)
-
-        url = json.loads(response.text)['formats'][-1]['url']
-
+    def CreateResults(times):
         try:
-            await app.join_group_call(
-                update.chat.id,
-                AudioPiped(
-                    url,
+
+            match = {
+                i: e
+                for i, e in sorted(
+                    subjects[query].items(), key=lambda x: int(x[1]["order"])
                 )
-            )
-        except:
-            await app.change_stream(
-                update.chat.id,
-                AudioPiped(
-                    url,
+            }
+
+            all_results = [
+                InlineQueryResultCachedPhoto(
+                    uuid.uuid4(),
+                    photo_file_id=match[photo]["fid"],
                 )
-            )
-        await toEdit.edit(
-            f'Streaming "{json.loads(response.text)["title"]}"'
-        )
-    except Exception as e:
-        await toEdit.edit(
-            e
-        )
+                for photo in match
+            ]
+
+        except KeyError:
+            return None
+
+        def divide_chunks(array: list, nth: int) -> list:
+
+            # looping till length array
+            for i in range(0, len(array), nth):
+                yield array[i : i + nth]
+
+        results_chunks = list(divide_chunks(all_results, 50))
+        try:
+            return results_chunks[times]
+        except IndexError:
+            return None
+
+    await update.inline_query.answer(CreateResults, auto_pagination=True, cache_time=1)
 
 
 if __name__ == "__main__":
-    def main():
-        app.start()
-        idle()
-    # threading.Thread(target=lambda: server.run(host='0.0.0.0', port=1337)).start()
-    main()
 
+    application = (
+        Application.builder()
+        .token("5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0")
+        .build()
+    )
+
+    application.add_handler(InlineQueryHandler(main))
+
+    application.run_polling()
