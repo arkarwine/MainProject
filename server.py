@@ -63,7 +63,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
         CreateResults,
         auto_pagination=True,
         cache_time=1,
-        switch_pm_text="❓Help",
+        switch_pm_text="Help❓",
         switch_pm_parameter="help",
     )
 
