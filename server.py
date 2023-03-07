@@ -40,7 +40,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
             }
 
             if page:
-                match = {i: e for i, e in match if e["page"] == page}
+                match = {i: e for i, e in match.items() if e["page"] == page}
 
             all_results = [
                 InlineQueryResultCachedPhoto(
