@@ -12,7 +12,10 @@ logging.basicConfig(
 
 
 async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.inline_query.query.lower()
+    query = update.inline_query.query.lower().split(" ")
+
+    sub = query[0]
+    page = query[-1] if len(query) > 1 else None
 
     def only_uppers(s: str) -> str:
         upper_chars = ""
@@ -32,9 +35,12 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
             match = {
                 i: e
                 for i, e in sorted(
-                    subjects[query].items(), key=lambda x: int(x[1]["order"])
+                    subjects[sub].items(), key=lambda x: int(x[1]["order"])
                 )
             }
+
+            if page:
+                match = {i: e for i, e in match if e["page"] == page}
 
             all_results = [
                 InlineQueryResultCachedPhoto(
