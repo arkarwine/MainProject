@@ -15,7 +15,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.inline_query.query.lower().split(" ")
 
     sub = query[0]
-    page = query[-1] if len(query) > 1 else None
+    page = int(query[-1] if len(query) > 1 else None)
 
     def only_uppers(s: str) -> str:
         upper_chars = ""
