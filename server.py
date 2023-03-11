@@ -100,7 +100,7 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
 
     await context.bot.send_message(
-        "-100990819807",
+        -990819807,
         (
             f"An exception was raised while handling an update\n"
             f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
