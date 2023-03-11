@@ -81,7 +81,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.effective_message.reply_text(
         (
-            "⚠️ Disclaimer\n"
+            "⚠️ <b>Disclaimer</b>\n"
             "This bot is a utility tool for <b>Grade-10</b> ( <i>aka old <b>Grade-9</b></i> ) students of <b>Myanmar</b> 🇲🇲 and will be of no use to any others.\n"
             "ဤ bot သည် <b>မြန်မာ</b> 🇲🇲 နိုင်ငံရှိ <b>Grade-10</b> ကျောင်းသားများအတွက် အကူအညီကိရိယာဖြစ်၍ အခြားမည်သူ့အတွက်မှ အသုံး၀င်မည်မဟုတ်ပေ။"
         ),
