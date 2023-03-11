@@ -87,7 +87,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode=telegram.constants.ParseMode.MARKDOWN_V2,
     )
     await update.effective_chat.send_action(telegram.constants.ChatAction.UPLOAD_VIDEO)
-    await update.effective_chat.send_video("")
+    # await update.effective_chat.send_video("")
 
 
 async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
