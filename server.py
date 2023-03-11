@@ -3,6 +3,7 @@ import logging
 import os
 import uuid
 
+import telegram
 from telegram import InlineQueryResultCachedPhoto, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, InlineQueryHandler
 
@@ -75,7 +76,14 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.effective_message.reply_text("Hi !")
+    await update.effective_message.reply_text(
+        """
+        ⚠️ This bot is a utility tool for **Grade-10** ( __aka old **Grade-9**__ ) students of **Myanmar** 🇲🇲 and will be of no use to any others.
+        ⚠️ ဤ bot သည် **မြန်မာ** 🇲🇲 နိုင်ငံရှိ **Grade-10** ကျောင်းသားများအတွက် အကူအညီကိရိယာဖြစ်၍ အခြားမည်သူ့အတွက်မှ အသုံး၀င်မည်မဟုတ်ပေ။
+        """
+    )
+    await update.effective_chat.send_action(telegram.constants.ChatAction.UPLOAD_VIDEO)
+    await update.effective_chat.send_video("")
 
 
 if __name__ == "__main__":
