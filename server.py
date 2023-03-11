@@ -4,6 +4,7 @@ import logging
 import os
 import traceback
 import uuid
+from cmath import log
 
 import telegram
 from telegram import InlineQueryResultCachedPhoto, Update
@@ -118,6 +119,6 @@ if __name__ == "__main__":
 
     application.add_handler(CommandHandler("start", start))
 
-    application.add_error_handler()
+    application.add_error_handler(log_error)
 
     application.run_polling()
