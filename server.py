@@ -1,6 +1,8 @@
+import html
 import json
 import logging
 import os
+import traceback
 import uuid
 
 import telegram
@@ -84,6 +86,27 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.effective_chat.send_video("")
 
 
+async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    tb_list = traceback.format_exception(
+        None, context.error, context.error.__traceback__
+    )
+    tb_string = "".join(tb_list)
+
+    update_str = update.to_dict() if isinstance(update, Update) else str(update)
+
+    update.effective_message.reply_text(
+        (
+            f"An exception was raised while handling an update\n"
+            f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
+            "</pre>\n\n"
+            f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
+            f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
+            f"<pre>{html.escape(tb_string)}</pre>"
+        )
+    )
+
+
 if __name__ == "__main__":
 
     application = Application.builder().token(os.getenv("TOKEN")).build()
@@ -91,5 +114,7 @@ if __name__ == "__main__":
     application.add_handler(InlineQueryHandler(main))
 
     application.add_handler(CommandHandler("start", start))
+
+    application.add_error_handler()
 
     application.run_polling()
