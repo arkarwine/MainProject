@@ -81,10 +81,10 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.effective_message.reply_text(
         (
-            "⚠️ This bot is a utility tool for **Grade\-10** \( __aka old **Grade\-9**__ \) students of **Myanmar** 🇲🇲 and will be of no use to any others."
-            "⚠️ ဤ bot သည် **မြန်မာ** 🇲🇲 နိုင်ငံရှိ **Grade\-10** ကျောင်းသားများအတွက် အကူအညီကိရိယာဖြစ်၍ အခြားမည်သူ့အတွက်မှ အသုံး၀င်မည်မဟုတ်ပေ။"
+            "⚠️ This bot is a utility tool for <b>Grade-10</b> ( <i>aka old <b>Grade-9</b></i> ) students of <b>Myanmar</b> 🇲🇲 and will be of no use to any others."
+            "⚠️ ဤ bot သည် <b>မြန်မာ</b> 🇲🇲 နိုင်ငံရှိ <b>Grade-10</b> ကျောင်းသားများအတွက် အကူအညီကိရိယာဖြစ်၍ အခြားမည်သူ့အတွက်မှ အသုံး၀င်မည်မဟုတ်ပေ။"
         ),
-        parse_mode=telegram.constants.ParseMode.MARKDOWN_V2,
+        parse_mode=telegram.constants.ParseMode.HTML,
     )
     await update.effective_chat.send_action(telegram.constants.ChatAction.UPLOAD_VIDEO)
     # await update.effective_chat.send_video("")
