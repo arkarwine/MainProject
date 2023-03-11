@@ -109,6 +109,7 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
             f"<pre>{html.escape(tb_string)}</pre>"
         ),
+        parse_mode=telegram.constants.ParseMode.HTML,
     )
 
 
