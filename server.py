@@ -137,7 +137,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     )
 
-    await context.bot.send_message(-990819807, (log_stream.getvalue()))
+    await context.bot.send_message(
+        -990819807,
+        (log_stream.getvalue()),
+        parse_mode=telegram.constants.ParseMode.HTML,
+    )
 
 
 async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
