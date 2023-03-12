@@ -127,7 +127,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
 
-    logging.info(
+    tele_log.info(
         (
             f"New interection with the bot\n\n"
             f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
