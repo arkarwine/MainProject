@@ -121,8 +121,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     await update.effective_chat.send_action(telegram.constants.ChatAction.UPLOAD_VIDEO)
 
-    await update.effective_chat.send_video("")
-
     log_stream = StringIO()
 
     tele_handler.setStream(log_stream)
