@@ -4,7 +4,7 @@ import logging
 import os
 import traceback
 import uuid
-from cmath import log
+from io import StringIO
 
 import telegram
 from telegram import InlineQueryResultCachedPhoto, Update
@@ -13,6 +13,16 @@ from telegram.ext import Application, CommandHandler, ContextTypes, InlineQueryH
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
+
+tele_log = logging.getLogger(__name__)
+
+tele_handler = logging.StreamHandler()
+tele_handler.setLevel(logging.INFO)
+
+tele_formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+tele_handler.setFormatter(tele_formatter)
+
+tele_log.addHandler(tele_handler)
 
 
 async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -79,6 +89,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     await update.effective_message.reply_text(
         (
             "⚠️ <b>Disclaimer</b>\n\n"
@@ -88,7 +99,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode=telegram.constants.ParseMode.HTML,
     )
     await update.effective_chat.send_action(telegram.constants.ChatAction.UPLOAD_VIDEO)
-    # await update.effective_chat.send_video("")
+
+    await update.effective_chat.send_video("")
+
+    # await context.bot.send_message(-990819807, (f"" f"" f""))
 
 
 async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -100,8 +114,11 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
 
-    await context.bot.send_message(
-        -990819807,
+    log_stream = StringIO()
+
+    tele_handler.setStream(log_stream)
+
+    tele_log.error(
         (
             f"An exception was raised while handling an update\n"
             f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
@@ -109,7 +126,12 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
             f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
             f"<pre>{html.escape(tb_string)}</pre>"
-        ),
+        )
+    )
+
+    await context.bot.send_message(
+        -990819807,
+        log_stream.getvalue(),
         parse_mode=telegram.constants.ParseMode.HTML,
     )
 
