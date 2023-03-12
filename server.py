@@ -123,7 +123,7 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     tele_log.error(
         (
-            f"An exception was raised while handling an update\n"
+            f"An exception was raised while handling an update\n\n"
             f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
             "</pre>\n\n"
             f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
@@ -134,7 +134,7 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await context.bot.send_message(
         -990819807,
-        ("@arkarwine" f"{log_stream.getvalue()}"),
+        ("@arkarwine\n" f"{log_stream.getvalue()}"),
         parse_mode=telegram.constants.ParseMode.HTML,
     )
 
