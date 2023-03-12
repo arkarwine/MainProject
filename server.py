@@ -28,6 +28,31 @@ tele_handler.setFormatter(tele_formatter)
 tele_log.addHandler(tele_handler)
 
 
+async def channel_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    log_stream = StringIO()
+
+    tele_handler.setStream(log_stream)
+
+    update_str = update.to_dict() if isinstance(update, Update) else str(update)
+
+    tele_log.info(
+        (
+            f"New interection with the bot.\n\n"
+            f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
+            "</pre>\n\n"
+            f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
+            f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
+        )
+    )
+
+    await context.bot.send_message(
+        -990819807,
+        (log_stream.getvalue()),
+        parse_mode=telegram.constants.ParseMode.HTML,
+    )
+
+
 async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.inline_query.query.lower().split(" ")
 
@@ -90,23 +115,7 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
         switch_pm_parameter="help",
     )
 
-    log_stream = StringIO()
-
-    tele_handler.setStream(log_stream)
-
-    update_str = update.to_dict() if isinstance(update, Update) else str(update)
-
-    logging.info(
-        (
-            f"New interection with the bot\n\n"
-            f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
-            "</pre>\n\n"
-            f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
-            f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        )
-    )
-
-    await context.bot.send_message(-990819807, (log_stream.getvalue()))
+    await channel_log(update, context)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -121,27 +130,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     await update.effective_chat.send_action(telegram.constants.ChatAction.UPLOAD_VIDEO)
 
-    log_stream = StringIO()
-
-    tele_handler.setStream(log_stream)
-
-    update_str = update.to_dict() if isinstance(update, Update) else str(update)
-
-    tele_log.info(
-        (
-            f"New interection with the bot.\n\n"
-            f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
-            "</pre>\n\n"
-            f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
-            f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        )
-    )
-
-    await context.bot.send_message(
-        -990819807,
-        (log_stream.getvalue()),
-        parse_mode=telegram.constants.ParseMode.HTML,
-    )
+    await channel_log(update, context)
 
 
 async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
