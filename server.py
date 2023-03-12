@@ -1,3 +1,4 @@
+import asyncio
 import html
 import json
 import logging
@@ -150,5 +151,7 @@ if __name__ == "__main__":
 
     async def started():
         await application.bot.send_message(-990819807, "Started !")
+
+    asyncio.run(started())
 
     application.run_polling()
