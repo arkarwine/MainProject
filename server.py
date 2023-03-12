@@ -129,7 +129,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     tele_log.info(
         (
-            f"New interection with the bot\n\n"
+            f"New interection with the bot.\n\n"
             f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
             "</pre>\n\n"
             f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
