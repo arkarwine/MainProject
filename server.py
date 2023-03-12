@@ -148,4 +148,7 @@ if __name__ == "__main__":
 
     application.add_error_handler(log_error)
 
+    async def started():
+        await application.bot.send_message(-990819807, "Started !")
+
     application.run_polling()
