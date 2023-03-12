@@ -19,7 +19,9 @@ tele_log = logging.getLogger(__name__)
 tele_handler = logging.StreamHandler()
 tele_handler.setLevel(logging.INFO)
 
-tele_formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+tele_formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 tele_handler.setFormatter(tele_formatter)
 
 tele_log.addHandler(tele_handler)
