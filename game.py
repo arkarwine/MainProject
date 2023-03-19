@@ -136,6 +136,8 @@ if __name__ == "__main__":
 
     application.add_handler(CommandHandler("game", Game))
 
+    application.add_handler(CommandHandler("tiktok", TikTok))
+
     application.add_error_handler(log_error)
 
     application.run_polling()
