@@ -1,8 +1,12 @@
+import html
 import json
 import logging
 import random
+import traceback
+from io import StringIO
 
 import requests
+import telegram
 from bs4 import BeautifulSoup
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
@@ -10,6 +14,18 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
+
+tele_log = logging.getLogger(__name__)
+
+tele_handler = logging.StreamHandler()
+tele_handler.setLevel(logging.INFO)
+
+tele_formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+tele_handler.setFormatter(tele_formatter)
+
+tele_log.addHandler(tele_handler)
 
 
 async def Game(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -70,6 +86,37 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )["src"]
 
     await update.effective_message.reply(data if data else "None")
+
+
+async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    tb_list = traceback.format_exception(
+        None, context.error, context.error.__traceback__
+    )
+    tb_string = "".join(tb_list)
+
+    update_str = update.to_dict() if isinstance(update, Update) else str(update)
+
+    log_stream = StringIO()
+
+    tele_handler.setStream(log_stream)
+
+    tele_log.error(
+        (
+            f"An exception was raised while handling an update\n\n"
+            f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
+            "</pre>\n\n"
+            f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
+            f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
+            f"<pre>{html.escape(tb_string)}</pre>"
+        )
+    )
+
+    await context.bot.send_message(
+        -990819807,
+        ("@arkarwine\n" f"{log_stream.getvalue()}"),
+        parse_mode=telegram.constants.ParseMode.HTML,
+    )
 
 
 if __name__ == "__main__":
