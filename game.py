@@ -75,7 +75,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
     toDel = await update.effective_message.reply_text("One second...")
 
     try:
-        context.args[0]
+        username = context.args[0]
     except IndexError:
         await update.effective_chat.send_message(
             "Provide a username as an argument please."
@@ -83,7 +83,11 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await toDel.delete()
         return
 
-    html = requests.get("https://www.tiktok.com/@ar_kar_wine?refer=creator_embed").text
+    print(1)
+
+    html = requests.get(f"https://www.tiktok.com/@{username}?refer=creator_embed").text
+
+    print(2)
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -119,9 +123,13 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     )
 
+    error = log_stream.getvalue()
+
+    print(error)
+
     await context.bot.send_message(
         -990819807,
-        ("@arkarwine\n" f"{log_stream.getvalue()}"),
+        ("@arkarwine\n" f"{error}"),
         parse_mode=telegram.constants.ParseMode.HTML,
     )
 
