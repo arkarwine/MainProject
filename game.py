@@ -5,6 +5,7 @@ import random
 import traceback
 from io import StringIO
 
+import imgkit
 import requests
 import telegram
 from bs4 import BeautifulSoup
@@ -93,9 +94,11 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     )
 
-    print(data)
+    img = imgkit.from_string(data, False) if data else "None"
 
-    await update.effective_message.reply_text(data if data else "None")
+    print(img, type(img))
+
+    await update.effective_message.reply_photo(img)
     await toDel.delete()
 
 
