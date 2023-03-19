@@ -10,6 +10,8 @@ import telegram
 from telegram import InlineQueryResultCachedPhoto, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, InlineQueryHandler
 
+from game import TikTok
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
@@ -170,6 +172,8 @@ if __name__ == "__main__":
     application.add_handler(InlineQueryHandler(main))
 
     application.add_handler(CommandHandler("start", start))
+
+    application.add_handler(CommandHandler("tiktok", TikTok))
 
     application.add_error_handler(log_error)
 
