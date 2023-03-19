@@ -1,6 +1,6 @@
 FROM python:3.11
 
-Run sudo apt-get install wkhtmltopdf
+Run apt install wkhtmltopdf
 
 RUN pip3 install --upgrade pip
 COPY requirements.txt .
