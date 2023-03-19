@@ -2,7 +2,7 @@ FROM python:3.11
 
 RUN apt update
 
-RUN apt install wkhtmltopdf
+RUN apt install -y wkhtmltopdf
 
 RUN pip3 install --upgrade pip
 COPY requirements.txt .
