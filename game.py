@@ -95,7 +95,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492 > div.tiktok-1gk89rh-DivShareInfo.ekmpd5l2 > div.tiktok-uha12h-DivContainer.e1vl87hj1 > span > img",
     )["src"]
 
-    await update.effective_message.reply(data if data else "None")
+    await update.effective_message.reply_text(data if data else "None")
     await toDel.delete()
 
 
