@@ -80,6 +80,8 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.effective_chat.send_message(
             "Provide a username as an argument please."
         )
+        await toDel.delete()
+        return
 
     html = requests.get("https://www.tiktok.com/@ar_kar_wine?refer=creator_embed").text
 
@@ -90,7 +92,6 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )["src"]
 
     await update.effective_message.reply(data if data else "None")
-
     await toDel.delete()
 
 
