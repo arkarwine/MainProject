@@ -1,6 +1,6 @@
 FROM python:3.11
 
-RUN apt update && upgrade
+RUN apt update
 
 RUN pip3 install --upgrade pip
 COPY requirements.txt .
