@@ -93,6 +93,8 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     )
 
+    print(data)
+
     await update.effective_message.reply_text(data if data else "None")
     await toDel.delete()
 
