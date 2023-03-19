@@ -72,7 +72,7 @@ async def Game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    toDel = await update.effective_message.reply_text("One second...")
+    toDel = await update.effective_message.reply_text("Loading...")
 
     try:
         username = context.args[0]
