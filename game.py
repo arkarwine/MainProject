@@ -3,6 +3,7 @@ import logging
 import random
 
 import requests
+from bs4 import BeautifulSoup
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
@@ -51,6 +52,24 @@ async def Game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     await toDel.delete()
+
+
+async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    try:
+        context.args[0]
+    except IndexError:
+        pass
+
+    html = requests.get("https://www.tiktok.com/@ar_kar_wine?refer=creator_embed").text
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    data = soup.select_one(
+        "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492 > div.tiktok-1gk89rh-DivShareInfo.ekmpd5l2 > div.tiktok-uha12h-DivContainer.e1vl87hj1 > span > img",
+    )["src"]
+
+    await update.effective_message.reply(data if data else "None")
 
 
 if __name__ == "__main__":
