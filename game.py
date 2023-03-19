@@ -72,10 +72,14 @@ async def Game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
+    toDel = await update.effective_message.reply_text("One second...")
+
     try:
         context.args[0]
     except IndexError:
-        pass
+        await update.effective_chat.send_message(
+            "Provide a username as an argument please."
+        )
 
     html = requests.get("https://www.tiktok.com/@ar_kar_wine?refer=creator_embed").text
 
@@ -86,6 +90,8 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )["src"]
 
     await update.effective_message.reply(data if data else "None")
+
+    await toDel.delete()
 
 
 async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -128,5 +134,7 @@ if __name__ == "__main__":
     )
 
     application.add_handler(CommandHandler("game", Game))
+
+    application.add_error_handler(log_error)
 
     application.run_polling()
