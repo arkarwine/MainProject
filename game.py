@@ -83,17 +83,13 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await toDel.delete()
         return
 
-    print(1)
-
     html = requests.get(f"https://www.tiktok.com/@{username}?refer=creator_embed").text
-
-    print(2)
 
     soup = BeautifulSoup(html, "html.parser")
 
     data = soup.select_one(
-        "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492 > div.tiktok-1gk89rh-DivShareInfo.ekmpd5l2 > div.tiktok-uha12h-DivContainer.e1vl87hj1 > span > img",
-    )["src"]
+        "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
+    )
 
     await update.effective_message.reply_text(data if data else "None")
     await toDel.delete()
