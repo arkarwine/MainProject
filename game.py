@@ -87,8 +87,10 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     soup = BeautifulSoup(html, "html.parser")
 
-    data = soup.select_one(
-        "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
+    data = str(
+        soup.select_one(
+            "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
+        )
     )
 
     await update.effective_message.reply_text(data if data else "None")
