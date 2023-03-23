@@ -9,6 +9,7 @@ import requests
 import telegram
 from bs4 import BeautifulSoup
 from html2image import Html2Image
+from playwright.async_api import async_playwright
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
@@ -75,7 +76,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     toDel = await update.effective_message.reply_text("Loading...")
 
-    convertor = Html2Image(custom_flags=["--no-sandbox"])
+    Html2Image(custom_flags=["--no-sandbox"])
 
     try:
         username = context.args[0]
@@ -90,13 +91,18 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     soup = BeautifulSoup(html, "html.parser")
 
-    data = str(
+    str(
         soup.select_one(
             "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
         )
     )
 
-    convertor.screenshot(html_str=str(data), save_as="profile.png")
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        await page.goto(f"https://www.tiktok.com/@{username}?refer=creator_embed")
+        await page.screenshot(path="profile.png")
+        await browser.close()
 
     await update.effective_message.reply_photo(open("profile.png", "rb").read())
     await toDel.delete()

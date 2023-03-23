@@ -2,3 +2,4 @@ python-telegram-bot
 requests
 bs4
 html2image
+pytest-playwright

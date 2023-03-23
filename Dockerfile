@@ -15,6 +15,8 @@ RUN pip3 install --upgrade pip
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
+RUN playwright install
+
 COPY . .
 
 CMD [ "python3", "./game.py" ]
