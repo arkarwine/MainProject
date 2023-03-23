@@ -133,7 +133,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ".tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2"
         )
 
-        png_bytes = png.screenshot(animations="disabled")
+        png_bytes = await png.screenshot(animations="disabled")
         await browser.close()
 
     await update.effective_message.reply_photo(png_bytes)
