@@ -92,8 +92,10 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     soup = BeautifulSoup(html, "html.parser")
 
+    div = "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492"
+
     data = soup.select_one(
-        "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
+        div,
     )
 
     for tag in data.select("svg"):
@@ -115,7 +117,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await img.evaluate(
             "image => image.complete || new Promise(f => image.onload = f)"
         )
-        png = await page.screenshot(full_page=False)
+        png = await page.locator(div).screenshot()
         await browser.close()
 
     await update.effective_message.reply_photo(png)

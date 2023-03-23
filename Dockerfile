@@ -2,6 +2,8 @@ FROM ubuntu:latest
 
 RUN apt-get -y update
 
+RUN apt-get install fonts-noto-color-emoji
+
 RUN apt-get install -y software-properties-common
 
 RUN add-apt-repository -y ppa:saiarcot895/chromium-beta
