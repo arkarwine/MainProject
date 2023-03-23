@@ -1,7 +1,6 @@
 import html
 import json
 import logging
-import os
 import random
 import traceback
 from io import StringIO
@@ -76,8 +75,6 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
     toDel = await update.effective_message.reply_text("Loading...")
 
     convertor = Html2Image(custom_flags=["--no-sandbox"])
-
-    print(os.popen("chromium-browser"))
 
     convertor.screenshot(
         url="https://www.tiktok.com/@ar_kar_wine?refer=creator_embed",
