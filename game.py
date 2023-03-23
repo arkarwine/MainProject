@@ -1,6 +1,7 @@
 import html
 import json
 import logging
+import os
 import random
 import traceback
 from io import StringIO
@@ -91,20 +92,33 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     soup = BeautifulSoup(html, "html.parser")
 
-    str(
-        soup.select_one(
-            "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
-        )
+    data = soup.select_one(
+        "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
     )
 
+    for tag in data.select("svg"):
+        tag.extract()
+    for tag in data.select("button"):
+        tag.extract()
+
+    with open("profile.html", "w") as f:
+        f.write(str(data))
+
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
-        await page.goto(f"https://www.tiktok.com/@{username}?refer=creator_embed")
-        await page.screenshot(path="profile.png")
+        await page.goto("file://" + str(os.getcwd()) + "/profile.html")
+        img = page.locator(
+            "body > div > div.tiktok-1gk89rh-DivShareInfo.ekmpd5l2 > div.tiktok-uha12h-DivContainer.e1vl87hj1 > span > img"
+        )
+        await img.scroll_into_view_if_needed()
+        await img.evaluate(
+            "image => image.complete || new Promise(f => image.onload = f)"
+        )
+        png = await page.screenshot(full_page=False)
         await browser.close()
 
-    await update.effective_message.reply_photo(open("profile.png", "rb").read())
+    await update.effective_message.reply_photo(png)
     await toDel.delete()
 
 
