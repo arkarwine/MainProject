@@ -98,22 +98,22 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         div,
     )
 
+    for tag in data.select("svg"):
+        tag.extract()
+    for tag in data.select("button"):
+        tag.extract()
+
     final_data = (
         str(data)
         + """
         <style>
             .tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2 {
-                margin: 50px;
+                padding: 50px;
                 display: inline-block;
             }
         </style>
         """
     )
-
-    for tag in data.select("svg"):
-        tag.extract()
-    for tag in data.select("button"):
-        tag.extract()
 
     with open("profile.html", "w") as f:
         f.write(final_data)
