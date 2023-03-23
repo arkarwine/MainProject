@@ -1,4 +1,4 @@
 python-telegram-bot
 requests
 bs4
-imgkit
+html2image

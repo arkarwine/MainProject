@@ -1,14 +1,14 @@
 import html
 import json
 import logging
+import os
 import random
 import traceback
 from io import StringIO
 
-import imgkit
 import requests
 import telegram
-from bs4 import BeautifulSoup
+from html2image import Html2Image
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
@@ -31,7 +31,7 @@ tele_log.addHandler(tele_handler)
 
 async def Game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    toDel = await update.effective_message.reply_text("One second...")
+    toDel = await update.effective_message.reply_text("One second ...")
 
     res = requests.get("https://mapi.mobilelegends.com/hero/list")
 
@@ -75,30 +75,36 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     toDel = await update.effective_message.reply_text("Loading...")
 
-    try:
-        username = context.args[0]
-    except IndexError:
-        await update.effective_chat.send_message(
-            "Provide a username as an argument please."
-        )
-        await toDel.delete()
-        return
+    convertor = Html2Image(custom_flags=["--no-sandbox"])
 
-    html = requests.get(f"https://www.tiktok.com/@{username}?refer=creator_embed").text
+    print(os.popen("chromium-browser"))
 
-    soup = BeautifulSoup(html, "html.parser")
+    convertor.screenshot(url="https://www.python.org", save_as="python_org.png")
 
-    data = str(
-        soup.select_one(
-            "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
-        )
-    )
+    # try:
+    #     username = context.args[0]
+    # except IndexError:
+    #     await update.effective_chat.send_message(
+    #         "Provide a username as an argument please."
+    #     )
+    #     await toDel.delete()
+    #     return
 
-    img = imgkit.from_string(data, False) if data else "None"
+    # html = requests.get(f"https://www.tiktok.com/@{username}?refer=creator_embed").text
 
-    print(img, type(img))
+    # soup = BeautifulSoup(html, "html.parser")
 
-    await update.effective_message.reply_photo(img)
+    # data = str(
+    #     soup.select_one(
+    #         "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
+    #     )
+    # )
+
+    # img = imgkit.from_string(data, False) if data else "None"
+
+    # print(img, type(img))
+
+    await update.effective_message.reply_photo(open("python_org.png", "rb").read())
     await toDel.delete()
 
 
