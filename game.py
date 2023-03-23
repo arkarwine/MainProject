@@ -107,7 +107,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 display: inline-block;
             }
         </style>
-        """,
+        """
     )
 
     for tag in data.select("svg"):
