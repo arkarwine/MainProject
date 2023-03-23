@@ -98,13 +98,25 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         div,
     )
 
+    final_data = (
+        str(data),
+        """
+        <style>
+            .tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2 {
+                margin: 50px;
+                display: inline-block;
+            }
+        </style>
+        """,
+    )
+
     for tag in data.select("svg"):
         tag.extract()
     for tag in data.select("button"):
         tag.extract()
 
     with open("profile.html", "w") as f:
-        f.write(str(data))
+        f.write(final_data)
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -117,12 +129,14 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await img.evaluate(
             "image => image.complete || new Promise(f => image.onload = f)"
         )
-        png = await page.locator(
+        png = page.locator(
             ".tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2"
-        ).screenshot()
+        )
+
+        png_bytes = png.screenshot(animations="disabled")
         await browser.close()
 
-    await update.effective_message.reply_photo(png)
+    await update.effective_message.reply_photo(png_bytes)
     await toDel.delete()
 
 
