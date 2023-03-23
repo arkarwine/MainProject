@@ -76,35 +76,28 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     convertor = Html2Image(custom_flags=["--no-sandbox"])
 
-    convertor.screenshot(
-        url="https://www.tiktok.com/@ar_kar_wine?refer=creator_embed",
-        save_as="python_org.png",
+    try:
+        username = context.args[0]
+    except IndexError:
+        await update.effective_chat.send_message(
+            "Provide a username as an argument please."
+        )
+        await toDel.delete()
+        return
+
+    html = requests.get(f"https://www.tiktok.com/@{username}?refer=creator_embed").text
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    data = str(
+        soup.select_one(
+            "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
+        )
     )
 
-    # try:
-    #     username = context.args[0]
-    # except IndexError:
-    #     await update.effective_chat.send_message(
-    #         "Provide a username as an argument please."
-    #     )
-    #     await toDel.delete()
-    #     return
+    convertor.screenshot(html_str=str(data), save_as="profile.png")
 
-    # html = requests.get(f"https://www.tiktok.com/@{username}?refer=creator_embed").text
-
-    # soup = BeautifulSoup(html, "html.parser")
-
-    # data = str(
-    #     soup.select_one(
-    #         "#main-content-others_homepage > div > div.tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2.enm41492",
-    #     )
-    # )
-
-    # img = imgkit.from_string(data, False) if data else "None"
-
-    # print(img, type(img))
-
-    await update.effective_message.reply_photo(open("python_org.png", "rb").read())
+    await update.effective_message.reply_photo(open("profile.png", "rb").read())
     await toDel.delete()
 
 
