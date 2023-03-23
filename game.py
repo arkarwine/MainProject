@@ -118,7 +118,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "image => image.complete || new Promise(f => image.onload = f)"
         )
         png = await page.locator(
-            "tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2"
+            ".tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2"
         ).screenshot()
         await browser.close()
 
