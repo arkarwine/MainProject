@@ -108,7 +108,7 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
         + """
         <style>
             .tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2 {
-                padding: 50px;
+                padding: 30px;
                 display: inline-block;
             }
         </style>
