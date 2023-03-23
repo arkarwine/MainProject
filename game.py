@@ -77,9 +77,12 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     convertor = Html2Image(custom_flags=["--no-sandbox"])
 
-    print(os.popen("chromium-browser arkarwine"))
+    print(os.popen("chromium-browser"))
 
-    convertor.screenshot(url="https://www.python.org", save_as="python_org.png")
+    convertor.screenshot(
+        url="https://www.tiktok.com/@ar_kar_wine?refer=creator_embed",
+        save_as="python_org.png",
+    )
 
     # try:
     #     username = context.args[0]
