@@ -7,6 +7,7 @@ from io import StringIO
 
 import requests
 import telegram
+from bs4 import BeautifulSoup
 from html2image import Html2Image
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
