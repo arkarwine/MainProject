@@ -99,8 +99,8 @@ async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     final_data = (
-        str(data),
-        """
+        str(data)
+        + """
         <style>
             .tiktok-1g04lal-DivShareLayoutHeader-StyledDivShareLayoutHeaderV2 {
                 margin: 50px;
