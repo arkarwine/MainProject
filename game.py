@@ -9,7 +9,6 @@ from io import StringIO
 import requests
 import telegram
 from bs4 import BeautifulSoup
-from html2image import Html2Image
 from playwright.async_api import async_playwright
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
@@ -76,8 +75,6 @@ async def Game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def TikTok(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     toDel = await update.effective_message.reply_text("Loading...")
-
-    Html2Image(custom_flags=["--no-sandbox"])
 
     try:
         username = context.args[0]
