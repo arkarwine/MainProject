@@ -1,4 +1,2 @@
-python-telegram-bot
-requests
-bs4
-pytest-playwright
+python_telegram_bot==20.2
+python-telegram-bot[job-queue]
