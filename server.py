@@ -28,7 +28,6 @@ tele_log.addHandler(tele_handler)
 
 
 async def channel_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     log_stream = StringIO()
 
     tele_handler.setStream(log_stream)
@@ -72,7 +71,6 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     def CreateResults(times):
         try:
-
             match = {
                 i: e
                 for i, e in sorted(
@@ -95,7 +93,6 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return None
 
         def divide_chunks(array: list, nth: int) -> list:
-
             # looping till length array
             for i in range(0, len(array), nth):
                 yield array[i : i + nth]
@@ -118,7 +115,6 @@ async def main(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     await update.effective_message.reply_text(
         (
             "⚠️ <b>Disclaimer</b>\n\n"
@@ -133,7 +129,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     tb_list = traceback.format_exception(
         None, context.error, context.error.__traceback__
     )
@@ -164,7 +159,6 @@ async def log_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == "__main__":
-
     application = Application.builder().token(os.getenv("TOKEN")).build()
 
     application.add_handler(InlineQueryHandler(main))
