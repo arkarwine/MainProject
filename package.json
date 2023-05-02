@@ -1,0 +1,29 @@
+{
+    "name": "mainproject",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node ./dist/index.js",
+        "build": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arkarwine/MainProject.git"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.17",
+        "@types/node-telegram-bot-api": "^0.61.6",
+        "typescript": "^5.0.4"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "node-telegram-bot-api": "^0.61.0"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/arkarwine/MainProject/issues"
+    },
+    "homepage": "https://github.com/arkarwine/MainProject#readme"
+}
