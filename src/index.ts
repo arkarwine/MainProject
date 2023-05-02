@@ -9,6 +9,8 @@ const app = express();
 
 app.use(express.json());
 
+bot.setWebHook(`https://arkarwine-arkarwine13579.b4a.run/bot${TOKEN}`);
+
 app.get("*", (req: Request, res: Response) => {
     res.end("200");
 });

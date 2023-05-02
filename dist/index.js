@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 8080;
 const bot = new node_telegram_bot_api_1.default(TOKEN);
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+bot.setWebHook(`https://arkarwine-arkarwine13579.b4a.run/bot${TOKEN}`);
 app.get("*", (req, res) => {
     res.end("200");
 });
