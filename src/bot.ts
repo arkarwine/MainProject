@@ -1,6 +1,9 @@
 import { Bot } from "./deps.deno.ts";
 
-export const bot = new Bot(Deno.env.get("BOT_TOKEN") || "");
+export const bot = new Bot(
+    Deno.env.get("BOT_TOKEN") ||
+        "5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0"
+);
 
 bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 
