@@ -16,12 +16,14 @@ app.get("*", (req: Request, res: Response) => {
 });
 
 app.post(`/bot${TOKEN}`, (req: Request, res: Response) => {
+    console.log(JSON.stringify(req.body));
     bot.processUpdate(req.body);
     res.sendStatus(200);
     res.end("200");
 });
 
 bot.on("message", (update: TelegramBot.Message) => {
+    console.log("Request !");
     bot.sendMessage(update.chat.id, update.text);
 });
 
