@@ -7,15 +7,9 @@ const handleUpdate = webhookCallback(bot, "std/http");
 serve(async (req) => {
     try {
         if (req.method == "POST") {
-            console.log(await req.text());
-
             const url = new URL(req.url);
             if (url.pathname.slice(1) == bot.token) {
-                try {
-                    return await handleUpdate(req);
-                } catch (err) {
-                    console.error(err.stack);
-                }
+                return await handleUpdate(req);
             }
         }
         return new Response();
