@@ -12,10 +12,11 @@ app.use(express.json());
 bot.setWebHook(`https://arkarwine-arkarwine13579.b4a.run/bot${TOKEN}`);
 
 app.get("*", (req: Request, res: Response) => {
+    bot.sendMessage(5030058973, "hi");
     res.end("200");
 });
 
-app.post(`/bot${TOKEN}`, (req: Request, res: Response) => {
+app.post(`/bot${TOKEN}`, async (req: Request, res: Response) => {
     console.log(JSON.stringify(req.body));
     bot.processUpdate(req.body);
     res.sendStatus(200);
