@@ -20,7 +20,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.post(`/bot${TOKEN}`, async (req: Request, res: Response) => {
-    console.log(JSON.stringify(req.body));
+    console.log(req.body);
     bot.processUpdate(req.body);
     res.sendStatus(200);
     res.end("200");

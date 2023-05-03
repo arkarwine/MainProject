@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
     res.end("201");
 });
 app.post(`/bot${TOKEN}`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(JSON.stringify(req.body));
+    console.log(req.body);
     bot.processUpdate(req.body);
     res.sendStatus(200);
     res.end("200");
