@@ -1,10 +1,26 @@
-import { Bot } from "./deps.deno.ts";
+import { Bot, Context } from "https://deno.land/x/grammy@v1.16.0/mod.ts";
+import {
+    HydrateFlavor,
+    hydrate,
+} from "https://deno.land/x/grammy_hydrate@v1.3.1/mod.ts";
+import { TiktokDl } from "./utils.ts";
 
-export const bot = new Bot(
+type MyContext = HydrateFlavor<Context>;
+
+const bot = new Bot<MyContext>(
     Deno.env.get("BOT_TOKEN") ||
         "5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0"
 );
 
-bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
+bot.use(hydrate());
 
-bot.command("ping", (ctx) => ctx.reply(`Pong! ${new Date()} ${Date.now()}`));
+bot.on("message:entities:url", async (ctx: Context) => {
+    const tturl: string[] =
+        ctx.message?.text?.match(
+            /^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+/
+        ) || [];
+    if (tturl) {
+        const video = await TiktokDl(tturl[0]);
+        await ctx.replyWithVideo(video);
+    }
+});
