@@ -21,6 +21,6 @@ bot.on("message:entities:url", async (ctx: Context) => {
         ) || [];
     if (tturl) {
         const video = await TiktokDl(tturl[0]);
-        await ctx.replyWithVideo(video);
+        await ctx.replyWithVideo(video as string);
     }
 });
