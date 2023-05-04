@@ -7,7 +7,7 @@ import { TiktokDl } from "./utils.ts";
 
 type MyContext = HydrateFlavor<Context>;
 
-const bot = new Bot<MyContext>(
+export const bot = new Bot<MyContext>(
     Deno.env.get("BOT_TOKEN") ||
         "5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0"
 );
