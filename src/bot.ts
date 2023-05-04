@@ -20,8 +20,8 @@ bot.on("message:entities:url", async (ctx: Context) => {
             /^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+/
         ) || [];
     if (tturl) {
-        const video = await TiktokDl(tturl[0])[0];
-        console.log(video[0]);
+        const video = await TiktokDl(tturl[0]);
+        console.log(video);
         await ctx.replyWithVideo(video);
     }
 });
