@@ -12,6 +12,7 @@ export const TiktokDl = async (tturl: string): Promise<string> => {
     };
     const response = await fetch(url, options);
     const res = JSON.parse(await response.text());
+    console.log(JSON.stringify(res));
     const tiktok: string = res.result.video.url_list.slice(1);
     return tiktok;
 };
