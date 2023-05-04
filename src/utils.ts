@@ -1,4 +1,6 @@
-export const TiktokDl = async (tturl: string): Promise<string> => {
+import { TiktokApi } from "./types.ts";
+
+export const TiktokDl = async (tturl: string): Promise<string | undefined> => {
     const url = `https://tiktok-downloader-download-videos-without-watermark1.p.rapidapi.com/media-info/?link=${tturl}`;
     const options = {
         method: "GET",
@@ -11,8 +13,7 @@ export const TiktokDl = async (tturl: string): Promise<string> => {
         },
     };
     const response = await fetch(url, options);
-    const res = JSON.parse(await response.text());
-    console.log(JSON.stringify(res));
-    const tiktok: string = res.result.video.url_list.slice(1);
+    const res: TiktokApi = JSON.parse(await response.text());
+    const tiktok = res.result?.video?.url_list?.slice(0)[0];
     return tiktok;
 };
