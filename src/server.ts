@@ -1,9 +1,8 @@
 import { serve } from "https://deno.land/std@0.154.0/http/server.ts";
-import { HydrateFlavor } from "https://deno.land/x/grammy_hydrate@v1.3.1/plugin.ts";
 import { bot } from "./bot.ts";
-import { Context, webhookCallback } from "./deps.deno.ts";
+import { webhookCallback } from "./deps.deno.ts";
 
-const handleUpdate = webhookCallback<HydrateFlavor<Context>>(bot, "std/http");
+const handleUpdate = webhookCallback(bot, "std/http");
 
 serve(async (req) => {
     try {
