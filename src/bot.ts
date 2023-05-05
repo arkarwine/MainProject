@@ -1,18 +1,19 @@
-import { Bot, Context } from "https://deno.land/x/grammy@v1.16.0/mod.ts";
+import { Api, Bot, Context } from "https://deno.land/x/grammy@v1.16.0/mod.ts";
 import {
+    HydrateApiFlavor,
     HydrateFlavor,
-    hydrate,
+    hydrateApi,
+    hydrateContext,
 } from "https://deno.land/x/grammy_hydrate@v1.3.1/mod.ts";
 import { TiktokDl } from "./utils.ts";
 
-type MyContext = HydrateFlavor<Context>;
-
-export const bot = new Bot<MyContext>(
+export const bot = new Bot<HydrateFlavor<Context>, HydrateApiFlavor<Api>>(
     Deno.env.get("BOT_TOKEN") ||
         "5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0"
 );
 
-bot.use(hydrate());
+bot.use(hydrateContext());
+bot.api.config.use(hydrateApi());
 
 bot.on("message:entities:url", async (ctx: Context) => {
     const tturl: string[] =
@@ -20,7 +21,11 @@ bot.on("message:entities:url", async (ctx: Context) => {
             /^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+/
         ) || [];
     if (tturl) {
+        const toDel = await ctx.reply("Loading ...");
+
         const video = await TiktokDl(tturl[0]);
         await ctx.replyWithVideo(video as string);
+
+        await toDel.delete();
     }
 });
