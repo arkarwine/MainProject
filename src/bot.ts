@@ -21,7 +21,7 @@ bot.on("message:entities:url", async (ctx: HydrateFlavor<Context>) => {
             /^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+/
         ) || [];
     console.log(tturl.toString());
-    if (tturl !== []) {
+    if (tturl.length > 0) {
         const toDel = await ctx.reply("Loading ...");
 
         const video = await TiktokDl(tturl[0]);
