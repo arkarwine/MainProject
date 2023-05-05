@@ -15,7 +15,7 @@ export const bot = new Bot<HydrateFlavor<Context>, HydrateApiFlavor<Api>>(
 bot.use(hydrateContext());
 bot.api.config.use(hydrateApi());
 
-bot.on("message:entities:url", async (ctx: Context) => {
+bot.on("message:entities:url", async (ctx: HydrateFlavor<Context>) => {
     const tturl: string[] =
         ctx.message?.text?.match(
             /^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+/
