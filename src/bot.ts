@@ -20,7 +20,6 @@ bot.on("message:entities:url", async (ctx: HydrateFlavor<Context>) => {
         ctx.message?.text?.match(
             /^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+/
         ) || [];
-    console.log(tturl.toString());
     if (tturl.length > 0) {
         const toDel = await ctx.reply("Loading ...");
 
