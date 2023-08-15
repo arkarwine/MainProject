@@ -120,7 +120,7 @@ async def insta(bot: Bot, update: Message):
 async def help(bot: Bot, update: Message):
     print("help")
     await update.reply(
-        "<b>Usage ❓️</b>:\nCopy paste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook / Youtube Music</i>",
+        "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook / Youtube Music</i>",
         disable_web_page_preview=True,
     )
 
