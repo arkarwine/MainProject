@@ -17,3 +17,8 @@ export const TiktokDl = async (tturl: string): Promise<string | undefined> => {
     const tiktok = res.result?.video?.url_list?.slice(0)[0];
     return tiktok;
 };
+
+export function fixUrl(url: string) {
+    if (!url.startsWith("https://")) url = "https://" + url;
+    return url;
+}
