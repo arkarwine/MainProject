@@ -36,8 +36,8 @@ async def youtube(bot: Bot, update: Message):
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
-    except:
-        await update.reply("An Error Occured !")
+    except Exception as e:
+        await update.reply("An Error Occured !/n", str(e))
     await toDel.delete()
 
 
@@ -55,8 +55,8 @@ async def music(bot: Bot, update: Message):
             caption=f'<a href="{dlLink}">Direct Download Link</a>',
             parse_mode=ParseMode.HTML,
         )
-    except:
-        await update.reply("An Error Occured !")
+    except Exception as e:
+        await update.reply("An Error Occured !/n", str(e))
     await toDel.delete()
 
 
@@ -76,8 +76,8 @@ async def tiktok(bot: Bot, update: Message):
             caption=f'<a href="{dlLink}">Direct Download Link</a>',
             parse_mode=ParseMode.HTML,
         )
-    except:
-        await update.reply("An Error Occured !")
+    except Exception as e:
+        await update.reply("An Error Occured !/n", str(e))
     await toDel.delete()
 
 
@@ -95,8 +95,8 @@ async def fb(bot: Bot, update: Message):
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
-    except:
-        await update.reply("An Error Occured !")
+    except Exception as e:
+        await update.reply("An Error Occured !/n", str(e))
     await toDel.delete()
 
 
@@ -113,8 +113,8 @@ async def insta(bot: Bot, update: Message):
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
-    except:
-        await update.reply("An Error Occured !")
+    except Exception as e:
+        await update.reply("An Error Occured !/n", str(e))
     await toDel.delete()
 
 
