@@ -61,7 +61,9 @@ async def music(bot: Bot, update: Message):
 
 
 @Bot.on_message(
-    filters.regex("^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+", flags=re.I)
+    filters.regex(
+        "^((https?:)?(\/\/)?)?((www|vt|vm)\.)(tiktok\.com)\/[\w@\/]+", flags=re.I
+    )
 )
 async def tiktok(bot: Bot, update: Message):
     print("tiktok")
