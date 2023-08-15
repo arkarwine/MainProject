@@ -4,6 +4,7 @@ import re
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
+
 from static.fbDl import FbDownload
 from static.InDl import InstaDownload
 from static.musicDl import YTmusicDownload
@@ -28,6 +29,7 @@ Bot = Client(
     )
 )
 async def youtube(bot: Bot, update: Message):
+    print("youtube")
     toDel = await update.reply("Loading...")
     try:
         dlLink = YTdownload(update.text)
@@ -43,6 +45,7 @@ async def youtube(bot: Bot, update: Message):
     filters.regex("^((https?:)?(\/\/)?)?(music\.youtube\.com)\/\w+", flags=re.I)
 )
 async def music(bot: Bot, update: Message):
+    print("music")
     toDel = await update.reply("Loading...")
     try:
         dlLink = YTmusicDownload(update.text)
@@ -61,6 +64,7 @@ async def music(bot: Bot, update: Message):
     filters.regex("^((https?:)?(\/\/)?)?((www|vt)\.)(tiktok\.com)\/\w+", flags=re.I)
 )
 async def tiktok(bot: Bot, update: Message):
+    print("tiktok")
     toDel = await update.reply("Loading...")
     try:
         dlLink = TiktokDownload(update.text)
@@ -82,6 +86,7 @@ async def tiktok(bot: Bot, update: Message):
     )
 )
 async def fb(bot: Bot, update: Message):
+    print("fb")
     toDel = await update.reply("Loading...")
     try:
         dlLink = FbDownload(update.text)
@@ -99,6 +104,7 @@ async def fb(bot: Bot, update: Message):
     )
 )
 async def insta(bot: Bot, update: Message):
+    print("insta")
     toDel = await update.reply("Loading...")
     try:
         dlLink = InstaDownload(update.text)
@@ -112,10 +118,13 @@ async def insta(bot: Bot, update: Message):
 
 @Bot.on_message(filters.command("help", prefixes=["/", "!", "?"]))
 async def help(bot: Bot, update: Message):
+    print("help")
     await update.reply(
         "<b>Usage ❓️</b>:\nCopy paste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook / Youtube Music</i>",
         disable_web_page_preview=True,
     )
 
+
+print("started")
 
 Bot.run()
