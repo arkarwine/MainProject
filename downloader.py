@@ -37,7 +37,9 @@ async def handle_error(
     tb_string = "".join(tb_list)
     logger.error(tb_string)
     await update.reply("An Error Occured !\n\n" + f"<pre>{str(tb_string)}</pre>")
-    await bot.send_message("An Error Occured !\n\n" + f"<pre>{str(tb_string)}</pre>")
+    await bot.send_message(
+        -990819807, "An Error Occured !\n\n" + f"<pre>{str(tb_string)}</pre>"
+    )
 
 
 @Bot.on_message(
@@ -126,7 +128,7 @@ async def help(bot: Client, update: Message):
 
 
 def start(logger: logging.Logger = logging):
-    logging.info("started")
+    logger.info("started")
 
 
 start()
