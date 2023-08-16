@@ -1,9 +1,10 @@
 import json
+import logging
 
 import requests
 
 
-def InstaDownload(link):
+def InstaDownload(link, logger: logging.Logger = logging):
     url = "https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index"
 
     querystring = {"url": link}
@@ -15,7 +16,8 @@ def InstaDownload(link):
 
     response = json.loads(
         requests.request("GET", url, headers=headers, params=querystring).text
-    )["media"]
+    )
 
-    return response
-    return response
+    logger.debug(json.dumps(response, indent=4))
+
+    return response["media"]

@@ -1,10 +1,11 @@
 import json
+import logging
 import re
 
 import requests
 
 
-def YTmusicDownload(link):
+def YTmusicDownload(link, logger: logging.Logger = logging):
     pattern = "\??(?:%3D|v=|vi=)([0-9a-zA-Z_-]*)(?:[%#?&]|$)"
 
     _id = re.search(pattern, link).groups()[0]
@@ -20,7 +21,8 @@ def YTmusicDownload(link):
 
     response = json.loads(
         requests.request("GET", url, headers=headers, params=querystring).text
-    )["result"]["download_url"]
+    )
 
-    return response
-    return response
+    logger.debug(json.dumps(response, indent=4))
+
+    return response["result"]["download_url"]
