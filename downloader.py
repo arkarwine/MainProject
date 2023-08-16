@@ -134,7 +134,7 @@ async def insta(bot: Bot, update: Message):
     await toDel.delete()
 
 
-@Bot.on_message(filters.command("help", prefixes=["/", "!", "?"]))
+@Bot.on_message()
 async def help(bot: Bot, update: Message):
     debugger.info("help")
     await update.reply(
