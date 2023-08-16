@@ -1,9 +1,10 @@
 import json
+import logging
 
 import requests
 
 
-def TiktokDownload(link):
+def TiktokDownload(link, logger: logging.Logger = logging):
     url = "https://tiktok-downloader-download-videos-without-watermark1.p.rapidapi.com/media-info/"
 
     querystring = {"link": link}
@@ -13,14 +14,12 @@ def TiktokDownload(link):
         "X-RapidAPI-Host": "tiktok-downloader-download-videos-without-watermark1.p.rapidapi.com",
     }
 
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    response = json.loads(
+        requests.request("GET", url, headers=headers, params=querystring).text
+    )
 
-    test = json.loads(response.text)
+    logger.debug(json.dumps(response, indent=4))
 
-    assert test["ok"]
+    assert response["ok"]
 
-    dlLink = test["result"]["video"]["url_list"][2]
-
-    return dlLink
-
-    return dlLink
+    return response["result"]["video"]["url_list"][2]

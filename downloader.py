@@ -1,5 +1,6 @@
 import logging
 import re
+import traceback
 
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
@@ -15,6 +16,12 @@ logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.INFO
 )
 
+
+debugger = logging.getLogger(__name__)
+
+debugger.setLevel(logging.DEBUG)
+
+
 Bot = Client(
     "bot",
     "22444092",
@@ -23,21 +30,30 @@ Bot = Client(
 )
 
 
+async def handle_error(
+    bot: Bot, update: Message, e: Exception, logger: logging.Logger = logging
+):
+    tb_list = traceback.format_exception(None, e, e.__traceback__)
+    tb_string = "".join(tb_list)
+    logger.error(tb_string)
+    await update.reply("An Error Occured !\n" + str(e))
+
+
 @Bot.on_message(
     filters.regex(
         "^((https?:)?\/\/)?((www|m)\.)?(youtube\.com|youtu.be)\/\w+", flags=re.I
     )
 )
 async def youtube(bot: Bot, update: Message):
-    print("youtube")
+    debugger.info("youtube")
     toDel = await update.reply("Loading...")
     try:
-        dlLink = YTdownload(update.text)
+        dlLink = YTdownload(update.text, debugger)
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
     except Exception as e:
-        await update.reply("An Error Occured !\n" + str(e))
+        await handle_error(bot, update, e)
     await toDel.delete()
 
 
@@ -45,7 +61,7 @@ async def youtube(bot: Bot, update: Message):
     filters.regex("^((https?:)?(\/\/)?)?(music\.youtube\.com)\/\w+", flags=re.I)
 )
 async def music(bot: Bot, update: Message):
-    print("music")
+    debugger.info("music")
     toDel = await update.reply("Loading...")
     try:
         dlLink = YTmusicDownload(update.text)
@@ -56,7 +72,7 @@ async def music(bot: Bot, update: Message):
             parse_mode=ParseMode.HTML,
         )
     except Exception as e:
-        await update.reply("An Error Occured !\n" + str(e))
+        await handle_error(bot, update, e)
     await toDel.delete()
 
 
@@ -66,7 +82,7 @@ async def music(bot: Bot, update: Message):
     )
 )
 async def tiktok(bot: Bot, update: Message):
-    print("tiktok")
+    debugger.info("tiktok")
     toDel = await update.reply("Loading...")
     try:
         dlLink = TiktokDownload(update.text)
@@ -77,7 +93,7 @@ async def tiktok(bot: Bot, update: Message):
             parse_mode=ParseMode.HTML,
         )
     except Exception as e:
-        await update.reply("An Error Occured !\n" + str(e))
+        await handle_error(bot, update, e)
     await toDel.delete()
 
 
@@ -88,7 +104,7 @@ async def tiktok(bot: Bot, update: Message):
     )
 )
 async def fb(bot: Bot, update: Message):
-    print("fb")
+    debugger.info("fb")
     toDel = await update.reply("Loading...")
     try:
         dlLink = FbDownload(update.text)
@@ -96,7 +112,7 @@ async def fb(bot: Bot, update: Message):
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
     except Exception as e:
-        await update.reply("An Error Occured !\n" + str(e))
+        await handle_error(bot, update, e)
     await toDel.delete()
 
 
@@ -106,7 +122,7 @@ async def fb(bot: Bot, update: Message):
     )
 )
 async def insta(bot: Bot, update: Message):
-    print("insta")
+    debugger.info("insta")
     toDel = await update.reply("Loading...")
     try:
         dlLink = InstaDownload(update.text)
@@ -114,19 +130,19 @@ async def insta(bot: Bot, update: Message):
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
     except Exception as e:
-        await update.reply("An Error Occured !\n" + str(e))
+        await handle_error(bot, update, e)
     await toDel.delete()
 
 
 @Bot.on_message(filters.command("help", prefixes=["/", "!", "?"]))
 async def help(bot: Bot, update: Message):
-    print("help")
+    debugger.info("help")
     await update.reply(
         "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook / Youtube Music</i>",
         disable_web_page_preview=True,
     )
 
 
-print("started")
+debugger.info("started")
 
 Bot.run()

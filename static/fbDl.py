@@ -1,7 +1,10 @@
+import json
+import logging
+
 import requests
 
 
-def FbDownload(link):
+def FbDownload(link, logger: logging.Logger = logging):
     url = "https://facebook17.p.rapidapi.com/api/facebook/links"
 
     payload = {"url": link}
@@ -11,8 +14,10 @@ def FbDownload(link):
         "X-RapidAPI-Host": "facebook17.p.rapidapi.com",
     }
 
-    response = requests.request("POST", url, json=payload, headers=headers).json()[0][
-        "urls"
-    ][0]["url"]
+    response = json.loads(
+        requests.request("POST", url, json=payload, headers=headers).text
+    )
 
-    return response
+    logger.debug(json.dumps(response, indent=4))
+
+    return response[0]["url"]

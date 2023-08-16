@@ -1,10 +1,11 @@
 import json
+import logging
 import re
 
 import requests
 
 
-def YTdownload(link):
+def YTdownload(link, logger: logging.Logger = logging):
     get = f'<a href="{link}">Some text</a>'
     pattern = re.compile(
         r"""https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?:[?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*""",
@@ -24,6 +25,8 @@ def YTdownload(link):
     response = json.loads(
         requests.request("GET", url, headers=headers, params=querystring).text
     )
+
+    logger.debug(json.dumps(response, indent=4))
 
     assert response["status"] == "OK"
 
