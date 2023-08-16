@@ -25,7 +25,7 @@ Bot = Client(
     "bot",
     "22444092",
     "bc6c9d84db95809f59bb96af90ccffd3",
-    bot_token="5618691960:AAGTjUmb0cD-NvNmjXgDq3CLg-MeiNkaz8o",
+    bot_token="5618691960:AAH6mdt52qKlcJsvHL5e_fHbQELTC8tv-lk",
     in_memory=True,
 )
 
