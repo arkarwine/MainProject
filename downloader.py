@@ -19,7 +19,7 @@ logging.basicConfig(
 
 debugger = logging.getLogger(__name__)
 
-debugger.setLevel(logging.DEBUG)
+debugger.setLevel(logging.INFO)
 
 
 Bot = Client(
