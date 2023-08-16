@@ -31,12 +31,13 @@ Bot = Client(
 
 
 async def handle_error(
-    bot: Bot, update: Message, e: Exception, logger: logging.Logger = logging
+    bot: Client, update: Message, e: Exception, logger: logging.Logger = logging
 ):
     tb_list = traceback.format_exception(None, e, e.__traceback__)
     tb_string = "".join(tb_list)
     logger.error(tb_string)
-    await update.reply("An Error Occured !\n" + f"<pre>{str(tb_string)}<pre>")
+    await update.reply("An Error Occured !\n\n" + f"<pre>{str(tb_string)}</pre>")
+    await bot.send_message("An Error Occured !\n\n" + f"<pre>{str(tb_string)}</pre>")
 
 
 @Bot.on_message(
@@ -44,7 +45,7 @@ async def handle_error(
         "^((https?:)?\/\/)?((www|m)\.)?(youtube\.com|youtu.be)\/\w+", flags=re.I
     )
 )
-async def youtube(bot: Bot, update: Message):
+async def youtube(bot: Client, update: Message):
     debugger.info("youtube")
     toDel = await update.reply("Loading...")
     try:
@@ -62,7 +63,7 @@ async def youtube(bot: Bot, update: Message):
         "^((https?:)?(\/\/)?)?((www|vt|vm)\.)(tiktok\.com)\/[\w@\/]+", flags=re.I
     )
 )
-async def tiktok(bot: Bot, update: Message):
+async def tiktok(bot: Client, update: Message):
     debugger.info("tiktok")
     toDel = await update.reply("Loading...")
     try:
@@ -84,7 +85,7 @@ async def tiktok(bot: Bot, update: Message):
         flags=re.I,
     )
 )
-async def fb(bot: Bot, update: Message):
+async def fb(bot: Client, update: Message):
     debugger.info("fb")
     toDel = await update.reply("Loading...")
     try:
@@ -102,7 +103,7 @@ async def fb(bot: Bot, update: Message):
         "^(https?:\/\/)?(www\.)?(instagram.com|instagr.am|instagr.com)\/\w+", flags=re.I
     )
 )
-async def insta(bot: Bot, update: Message):
+async def insta(bot: Client, update: Message):
     debugger.info("insta")
     toDel = await update.reply("Loading...")
     try:
@@ -116,7 +117,7 @@ async def insta(bot: Bot, update: Message):
 
 
 @Bot.on_message()
-async def help(bot: Bot, update: Message):
+async def help(bot: Client, update: Message):
     debugger.info("help")
     await update.reply(
         "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook</i>",
