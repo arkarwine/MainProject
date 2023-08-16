@@ -26,7 +26,7 @@ Bot = Client(
     "bot",
     "22444092",
     "bc6c9d84db95809f59bb96af90ccffd3",
-    bot_token="5618691960:AAGR2iKzDsPHR8AIc_TclP5uspnAddlgUB8",
+    bot_token="5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0",
 )
 
 
@@ -36,7 +36,7 @@ async def handle_error(
     tb_list = traceback.format_exception(None, e, e.__traceback__)
     tb_string = "".join(tb_list)
     logger.error(tb_string)
-    await update.reply("An Error Occured !\n" + str(e))
+    await update.reply("An Error Occured !\n" + str(tb_string))
 
 
 @Bot.on_message(
@@ -53,7 +53,7 @@ async def youtube(bot: Bot, update: Message):
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
     except Exception as e:
-        await handle_error(bot, update, e)
+        await handle_error(bot, update, e, debugger)
     await toDel.delete()
 
 
@@ -143,6 +143,11 @@ async def help(bot: Bot, update: Message):
     )
 
 
-debugger.info("started")
+def start(logger: logging.Logger = logging):
+    logging.info("started")
+
+
+start()
+
 
 Bot.run()
