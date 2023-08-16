@@ -8,7 +8,6 @@ from pyrogram.types import Message
 
 from static.fbDl import FbDownload
 from static.InDl import InstaDownload
-from static.musicDl import YTmusicDownload
 from static.ttDl import TiktokDownload
 from static.ytDl import YTdownload
 
@@ -37,7 +36,7 @@ async def handle_error(
     tb_list = traceback.format_exception(None, e, e.__traceback__)
     tb_string = "".join(tb_list)
     logger.error(tb_string)
-    await update.reply("An Error Occured !\n" + str(tb_string))
+    await update.reply("An Error Occured !\n" + f"<pre>{str(tb_string)}<pre>")
 
 
 @Bot.on_message(
@@ -55,25 +54,6 @@ async def youtube(bot: Bot, update: Message):
         )
     except Exception as e:
         await handle_error(bot, update, e, debugger)
-    await toDel.delete()
-
-
-@Bot.on_message(
-    filters.regex("^((https?:)?(\/\/)?)?(music\.youtube\.com)\/\w+", flags=re.I)
-)
-async def music(bot: Bot, update: Message):
-    debugger.info("music")
-    toDel = await update.reply("Loading...")
-    try:
-        dlLink = YTmusicDownload(update.text)
-        await bot.send_audio(
-            update.chat.id,
-            dlLink,
-            caption=f'<a href="{dlLink}">Direct Download Link</a>',
-            parse_mode=ParseMode.HTML,
-        )
-    except Exception as e:
-        await handle_error(bot, update, e)
     await toDel.delete()
 
 
@@ -139,7 +119,7 @@ async def insta(bot: Bot, update: Message):
 async def help(bot: Bot, update: Message):
     debugger.info("help")
     await update.reply(
-        "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook / Youtube Music</i>",
+        "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook</i>",
         disable_web_page_preview=True,
     )
 
