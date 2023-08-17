@@ -5,13 +5,13 @@ import requests
 
 
 def TiktokDownload(link, logger: logging.Logger = logging):
-    url = "https://tiktok-downloader-download-videos-without-watermark1.p.rapidapi.com/media-info/"
+    url = "https://tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com/vid/index"
 
-    querystring = {"link": link}
+    querystring = {"url": link}
 
     headers = {
         "X-RapidAPI-Key": "3d28911b5emshfa3878e04bad055p1d8d4ajsn3656fe6360e3",
-        "X-RapidAPI-Host": "tiktok-downloader-download-videos-without-watermark1.p.rapidapi.com",
+        "X-RapidAPI-Host": "tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com",
     }
 
     response = json.loads(
@@ -20,6 +20,4 @@ def TiktokDownload(link, logger: logging.Logger = logging):
 
     logger.debug(json.dumps(response, indent=4))
 
-    assert response["ok"]
-
-    return response["result"]["video"]["url_list"][2]
+    return response["video"][-1]

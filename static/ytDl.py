@@ -28,8 +28,6 @@ def YTdownload(link, logger: logging.Logger = logging):
 
     logger.debug(json.dumps(response, indent=4))
 
-    assert response["status"] == "OK"
-
     dlLink = response["formats"][-1]["url"]
 
     return dlLink
