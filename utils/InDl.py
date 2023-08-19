@@ -1,10 +1,10 @@
 import json
 import logging
 
-import requests
+from fetch import fetch
 
 
-def InstaDownload(link, logger: logging.Logger = logging):
+async def InstaDownload(link, logger: logging.Logger = logging):
     url = "https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index"
 
     querystring = {"url": link}
@@ -14,9 +14,7 @@ def InstaDownload(link, logger: logging.Logger = logging):
         "X-RapidAPI-Host": "instagram-downloader-download-instagram-videos-stories.p.rapidapi.com",
     }
 
-    response = json.loads(
-        requests.request("GET", url, headers=headers, params=querystring).text
-    )
+    response = json.loads(await fetch("GET", url, headers=headers, params=querystring))
 
     logger.debug(json.dumps(response, indent=4))
 

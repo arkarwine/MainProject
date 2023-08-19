@@ -2,10 +2,10 @@ import json
 import logging
 import re
 
-import requests
+from fetch import fetch
 
 
-def YTdownload(link, logger: logging.Logger = logging):
+async def YTdownload(link, logger: logging.Logger = logging):
     get = f'<a href="{link}">Some text</a>'
     pattern = re.compile(
         r"""https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?:[?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*""",
@@ -22,9 +22,7 @@ def YTdownload(link, logger: logging.Logger = logging):
         "X-RapidAPI-Host": "ytstream-download-youtube-videos.p.rapidapi.com",
     }
 
-    response = json.loads(
-        requests.request("GET", url, headers=headers, params=querystring).text
-    )
+    response = json.loads(await fetch("GET", url, headers=headers, params=querystring))
 
     logger.debug(json.dumps(response, indent=4))
 

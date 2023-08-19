@@ -1,10 +1,10 @@
 import json
 import logging
 
-import requests
+from fetch import fetch
 
 
-def TiktokDownload(link, logger: logging.Logger = logging):
+async def TiktokDownload(link, logger: logging.Logger = logging):
     url = "https://tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com/vid/index"
 
     querystring = {"url": link}
@@ -14,9 +14,7 @@ def TiktokDownload(link, logger: logging.Logger = logging):
         "X-RapidAPI-Host": "tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com",
     }
 
-    response = json.loads(
-        requests.request("GET", url, headers=headers, params=querystring).text
-    )
+    response = json.loads(await fetch("GET", url, headers=headers, params=querystring))
 
     logger.debug(json.dumps(response, indent=4))
 

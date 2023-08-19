@@ -1,10 +1,10 @@
 import json
 import logging
 
-import requests
+from fetch import fetch
 
 
-def FbDownload(link, logger: logging.Logger = logging):
+async def FbDownload(link, logger: logging.Logger = logging):
     url = "https://facebook17.p.rapidapi.com/api/facebook/links"
 
     payload = {"url": link}
@@ -14,9 +14,7 @@ def FbDownload(link, logger: logging.Logger = logging):
         "X-RapidAPI-Host": "facebook17.p.rapidapi.com",
     }
 
-    response = json.loads(
-        requests.request("POST", url, json=payload, headers=headers).text
-    )
+    response = json.loads(await fetch("POST", url, json=payload, headers=headers))
 
     logger.debug(json.dumps(response, indent=4))
 

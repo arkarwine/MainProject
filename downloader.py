@@ -6,10 +6,10 @@ from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
-from static.fbDl import FbDownload
-from static.InDl import InstaDownload
-from static.ttDl import TiktokDownload
-from static.ytDl import YTdownload
+from utils.fbDl import FbDownload
+from utils.InDl import InstaDownload
+from utils.ttDl import TiktokDownload
+from utils.ytDl import YTdownload
 
 logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.INFO

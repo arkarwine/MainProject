@@ -2,5 +2,5 @@
 # python-telegram-bot[job-queue]
 
 pyrogram
-requests
+aiohttp
 TgCrypto
