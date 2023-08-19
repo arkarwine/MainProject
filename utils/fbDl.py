@@ -1,7 +1,7 @@
 import json
 import logging
 
-from fetch import fetch
+from utils.fetch import fetch
 
 
 async def FbDownload(link, logger: logging.Logger = logging):

@@ -2,7 +2,7 @@ import json
 import logging
 import re
 
-from fetch import fetch
+from utils.fetch import fetch
 
 
 async def YTdownload(link, logger: logging.Logger = logging):
