@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from ttDl import TiktokDownload
+from utils.ttDl import TiktokDownload
 
 logging.basicConfig(level=logging.DEBUG)
 
