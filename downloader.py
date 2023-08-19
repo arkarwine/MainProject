@@ -51,7 +51,7 @@ async def youtube(bot: Client, update: Message):
     debugger.info("youtube")
     toDel = await update.reply("Loading...")
     try:
-        dlLink = YTdownload(update.text, debugger)
+        dlLink = await YTdownload(update.text, debugger)
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
@@ -69,7 +69,7 @@ async def tiktok(bot: Client, update: Message):
     debugger.info("tiktok")
     toDel = await update.reply("Loading...")
     try:
-        dlLink = TiktokDownload(update.text)
+        dlLink = await TiktokDownload(update.text)
         await bot.send_video(
             update.chat.id,
             dlLink,
@@ -91,7 +91,7 @@ async def fb(bot: Client, update: Message):
     debugger.info("fb")
     toDel = await update.reply("Loading...")
     try:
-        dlLink = FbDownload(update.text)
+        dlLink = await FbDownload(update.text)
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )
@@ -109,7 +109,7 @@ async def insta(bot: Client, update: Message):
     debugger.info("insta")
     toDel = await update.reply("Loading...")
     try:
-        dlLink = InstaDownload(update.text)
+        dlLink = await InstaDownload(update.text)
         await update.reply(
             f'<a href="{dlLink}">Direct Download Link</a>', parse_mode=ParseMode.HTML
         )

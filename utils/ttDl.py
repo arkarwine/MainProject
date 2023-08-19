@@ -1,7 +1,7 @@
 import json
 import logging
 
-from utils.fetch import fetch
+from fetch import fetch
 
 
 async def TiktokDownload(link, logger: logging.Logger = logging):
