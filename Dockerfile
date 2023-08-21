@@ -1,9 +1,7 @@
-FROM python:3.11
-
-COPY requirements.txt .
-
-RUN pip3 install -r requirements.txt
+FROM denoland/deno:latest
 
 COPY . .
 
-CMD ["python3", "downloader.py"]
+ENV BOT_TOKEN=5618691960:AAETR5IfqyZOIcZ5Cgst1KX8JYY7wpighU0
+
+CMD [ "deno", "--help" ]
