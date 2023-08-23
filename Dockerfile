@@ -2,6 +2,6 @@ FROM denoland/deno:latest
 
 COPY . .
 
-ENV BOT_TOKEN=5618691960:AAETR5IfqyZOIcZ5Cgst1KX8JYY7wpighU0
+EXPOSE 8080
 
 CMD [ "deno", "task", "serve" ]
