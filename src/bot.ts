@@ -60,9 +60,10 @@ bot.on("::url", async (ctx: HydrateFlavor<Context>) => {
                 await ctx.reply(`<a href="${video}">Direct Download Link</a>`, {
                     parse_mode: "HTML",
                 });
+                await toDel.delete();
                 await ctx.replyWithVideo(video);
             } catch {}
-            await toDel.delete();
+
             break;
         }
     }
