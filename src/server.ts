@@ -4,7 +4,7 @@ import bot from "./bot.ts";
 
 const handleUpdate = webhookCallback(bot, "std/http");
 
-Deno.serve(async (req) => {
+Deno.serve({ port: 8080 }, async (req) => {
     if (req.method === "POST") {
         console.log("POST");
 
