@@ -57,12 +57,11 @@ bot.on("::url", async (ctx: HydrateFlavor<Context>) => {
             const toDel = await ctx.reply("Loading ...");
             const video = (await r.downloader(url[0])) as string;
             try {
-                await ctx.replyWithVideo(video, {
-                    caption: `<a href="${video}">Direct Download Link</a>`,
+                await ctx.reply(`<a href="${video}">Direct Download Link</a>`, {
+                    parse_mode: "HTML",
                 });
-            } catch {
-                await ctx.reply(`<a href="${video}">Direct Download Link</a>`);
-            }
+                await ctx.replyWithVideo(video);
+            } catch {}
             await toDel.delete();
             break;
         }
