@@ -3,7 +3,6 @@ import {
     HydrateFlavor,
     hydrate,
 } from "https://deno.land/x/grammy_hydrate@v1.3.1/mod.ts";
-import { GrammyError } from "./deps.deno.ts";
 import { FacebookDl } from "./utils/fbDl.ts";
 import { InstagramDl } from "./utils/inDl.ts";
 import { TiktokDl } from "./utils/ttDl.ts";
@@ -61,7 +60,7 @@ bot.on("::url", async (ctx: HydrateFlavor<Context>) => {
                 await ctx.replyWithVideo(video, {
                     caption: `<a href="${video}">Direct Download Link</a>`,
                 });
-            } catch GrammyError {
+            } catch {
                 await ctx.reply(`<a href="${video}">Direct Download Link</a>`);
             }
             await toDel.delete();
