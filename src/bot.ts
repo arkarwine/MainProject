@@ -10,10 +10,12 @@ import { YoutubeDl } from "./utils/ytDl.ts";
 
 type MyContext = HydrateFlavor<Context>;
 
-export const bot = new Bot<MyContext>(
+const bot = new Bot<MyContext>(
     Deno.env.get("BOT_TOKEN") ||
         "5529005476:AAFsN3-AeOUiwghYEFArOyFrrnHP8mmJEk0"
 );
+
+export default bot;
 
 bot.use(hydrate());
 
