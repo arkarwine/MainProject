@@ -6,7 +6,9 @@ const handleUpdate = webhookCallback(bot, "std/http");
 
 Deno.serve(async (req) => {
     if (req.method === "POST") {
+        console.log("POST");
+
         return await handleUpdate(req);
     }
-    return new Response();
+    return new Response("200");
 });
