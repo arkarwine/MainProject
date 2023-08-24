@@ -22,6 +22,7 @@ const client = new TelegramClient(
 await client.start({
     botAuthToken: BOT_TOKEN,
 });
+await client.setParseMode("html");
 
 client.addEventHandler(
     async (update: NewMessageEvent) => {
@@ -56,13 +57,15 @@ client.addEventHandler(
                 });
                 const video = (await r.downloader(url[0])) as string;
                 try {
-                    await await client.sendMessage(update.chatId!, {
+                    const msg = await await client.sendMessage(update.chatId!, {
                         message: `<a href="${video}">Direct Download Link</a>`,
-                        parseMode: "html",
                         linkPreview: false,
                     });
                     await client.deleteMessages(update.chatId!, [toDel.id], {});
-                    await client.sendFile(update.chatId!, { file: video });
+                    await client.editMessage(update.chatId!, {
+                        message: msg.id,
+                        file: video,
+                    });
                 } catch (error) {
                     console.log(error);
                 }
