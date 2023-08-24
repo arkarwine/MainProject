@@ -87,3 +87,12 @@ client.addEventHandler(
         },
     })
 );
+
+client.addEventHandler(async (update: NewMessageEvent) => {
+    await client.sendMessage(update.chatId!, {
+        message:
+            "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook</i>",
+        parseMode: "html",
+        linkPreview: false,
+    });
+});
