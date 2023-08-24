@@ -72,27 +72,21 @@ client.addEventHandler(
         }
     },
     new NewMessage({
-        func(ctx) {
-            console.log(
+        async func(ctx) {
+            const condition =
                 ctx.message.entities?.some(
                     (c) => c.className === "MessageEntityUrl"
-                ) || false
-            );
+                ) || false;
 
-            return (
-                ctx.message.entities?.some(
-                    (c) => c.className === "MessageEntityUrl"
-                ) || false
-            );
+            if (!condition)
+                await client.sendMessage(ctx.chatId!, {
+                    message:
+                        "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook</i>",
+                    parseMode: "html",
+                    linkPreview: false,
+                });
+
+            return condition;
         },
     })
 );
-
-client.addEventHandler(async (update: NewMessageEvent) => {
-    await client.sendMessage(update.chatId!, {
-        message:
-            "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook</i>",
-        parseMode: "html",
-        linkPreview: false,
-    });
-});
