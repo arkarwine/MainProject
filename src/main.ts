@@ -22,7 +22,6 @@ const client = new TelegramClient(
 await client.start({
     botAuthToken: BOT_TOKEN,
 });
-await client.setParseMode("html");
 
 client.addEventHandler(
     async (update: NewMessageEvent) => {
@@ -51,6 +50,7 @@ client.addEventHandler(
 
         for (const r of re) {
             const url = text.match(r.regex);
+
             if (url !== null) {
                 const toDel = await client.sendMessage(update.chatId!, {
                     message: "Loading ...",
@@ -59,15 +59,15 @@ client.addEventHandler(
                 try {
                     const msg = await await client.sendMessage(update.chatId!, {
                         message: `<a href="${video}">Direct Download Link</a>`,
+                        parseMode: "html",
                         linkPreview: false,
                     });
                     await client.deleteMessages(update.chatId!, [toDel.id], {});
-                    await client.editMessage(update.chatId!, {
-                        message: msg.id,
+                    await client.sendFile(update.chatId!, {
                         file: video,
                     });
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
 
                 break;
@@ -81,10 +81,12 @@ client.addEventHandler(
                     (c) => c.className === "MessageEntityUrl"
                 ) || false;
 
+            console.log(condition);
+
             if (!condition)
                 await client.sendMessage(ctx.chatId!, {
                     message:
-                        "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / facebook</i>",
+                        "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / Facebook</i>",
                     parseMode: "html",
                     linkPreview: false,
                 });
