@@ -1,8 +1,8 @@
 // import { type } from "./types.ts";
 
-export const FacebookDl = async (
-    fburl: string
-): Promise<string | undefined> => {
+import { FacebookApi } from "./types.d.ts";
+
+export const FacebookDl = async (fburl: string): Promise<string> => {
     const api = `https://facebook17.p.rapidapi.com/api/facebook/links`;
     const options: RequestInit = {
         method: "POST",
@@ -15,7 +15,7 @@ export const FacebookDl = async (
         },
     };
     const response = await fetch(api, options);
-    const result /*: type */ = JSON.parse(await response.text());
+    const result: FacebookApi = JSON.parse(await response.text());
 
     // console.debug(result);
 

@@ -1,6 +1,6 @@
-import { TiktokApi } from "./types.ts";
+import { TiktokApi } from "./types.d.ts";
 
-export const TiktokDl = async (tturl: string): Promise<string | undefined> => {
+export const TiktokDl = async (tturl: string): Promise<string> => {
     const api = `https://tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com/vid/index?url=${tturl}`;
     const options = {
         method: "GET",

@@ -1,11 +1,9 @@
 // import { type } from "./types.ts";
 
-export const YoutubeDl = async (yturl: string): Promise<string | undefined> => {
-    const id = yturl.match(
-        /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i
-    )![1];
+import { YoutubeApi } from "./types.d.ts";
 
-    const api = `https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=${id}`;
+export const YoutubeDl = async (yturl: string): Promise<string> => {
+    const api = `https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=${yturl}`;
     const options: RequestInit = {
         method: "GET",
         headers: {
@@ -16,7 +14,7 @@ export const YoutubeDl = async (yturl: string): Promise<string | undefined> => {
         },
     };
     const response = await fetch(api, options);
-    const result /*: type */ = JSON.parse(await response.text());
+    const result: YoutubeApi = JSON.parse(await response.text());
 
     // console.debug(result);
 

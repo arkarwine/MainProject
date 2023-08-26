@@ -5,7 +5,7 @@ import {
     TelegramClient,
 } from "https://deno.land/x/grm/mod.ts";
 import { FacebookDl } from "./utils/fbDl.ts";
-import { InstagramDl } from "./utils/inDl.ts";
+import { InstagramDl } from "./utils/igDl.ts";
 import { TiktokDl } from "./utils/ttDl.ts";
 import { YoutubeDl } from "./utils/ytDl.ts";
 
@@ -25,25 +25,23 @@ await client.start({
 
 client.addEventHandler(
     async (update: NewMessageEvent) => {
-        let text = update.message?.text!;
-
-        if (!text.startsWith("https://")) text = "https://" + text;
+        const text = update.message?.text!;
 
         const re = [
             {
-                regex: /^(https?:\/\/)?(www\.)?(fb|mbasic.facebook|m\.facebook|facebook|fb)\.(com|me|watch)\/\w+/i,
+                regex: /((?:https?:\/\/)?(?:www\.)?(?:fb|mbasic.facebook|m\.facebook|facebook|fb)\.(?:com|me|watch)\/\w+)/i,
                 downloader: FacebookDl,
             },
             {
-                regex: /^(https?:\/\/)?(www\.)?(instagram.com|instagr.am|instagr.com)\/\w+/i,
+                regex: /((?:https?:\/\/)?(?:www\.)?(?:instagram.com|instagr.am|instagr.com)\/[\w@\/]+)/i,
                 downloader: InstagramDl,
             },
             {
-                regex: /^((https?:)?(\/\/)?)?((www|vt|vm)\.)(tiktok\.com)\/[\w@\/]+/i,
+                regex: /((?:(?:https?:)?(?:\/\/)?)?(?:(?:www|vt|vm)\.)(?:tiktok\.com)\/[\w@\/]+)/i,
                 downloader: TiktokDl,
             },
             {
-                regex: /^((https?:)?\/\/)?((www|m)\.)?(youtube\.com|youtu.be)\/\w+/i,
+                regex: /(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)/i,
                 downloader: YoutubeDl,
             },
         ] as const;
@@ -51,13 +49,16 @@ client.addEventHandler(
         for (const r of re) {
             const url = text.match(r.regex);
 
+            console.log(url);
+
             if (url !== null) {
                 const toDel = await client.sendMessage(update.chatId!, {
                     message: "Loading ...",
                 });
                 const video = (await r.downloader(url[0])) as string;
+
                 try {
-                    const msg = await await client.sendMessage(update.chatId!, {
+                    await client.sendMessage(update.chatId!, {
                         message: `<a href="${video}">Direct Download Link</a>`,
                         parseMode: "html",
                         linkPreview: false,

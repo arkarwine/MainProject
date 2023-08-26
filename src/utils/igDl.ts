@@ -1,8 +1,8 @@
 // import { type } from "./types.ts";
 
-export const InstagramDl = async (
-    inurl: string
-): Promise<string | undefined> => {
+import { InstagramApi } from "./types.d.ts";
+
+export const InstagramDl = async (inurl: string): Promise<string> => {
     const api = `https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index?url=${inurl}`;
     const options: RequestInit = {
         method: "GET",
@@ -14,10 +14,10 @@ export const InstagramDl = async (
         },
     };
     const response = await fetch(api, options);
-    const result /*: type */ = JSON.parse(await response.text());
+    const result: InstagramApi = JSON.parse(await response.text());
 
     // console.debug(result);
 
-    const tiktok = result.media;
-    return tiktok;
+    const instagram = result.media[0].media;
+    return instagram;
 };
