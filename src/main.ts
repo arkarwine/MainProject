@@ -29,7 +29,7 @@ client.addEventHandler(
 
         const re = [
             {
-                regex: /((?:https?:\/\/)?(?:www\.)?(?:fb|mbasic.facebook|m\.facebook|facebook|fb)\.(?:com|me|watch)\/\w+)/i,
+                regex: /((?:https?:\/\/)?(?:www\.)?(?:fb|mbasic.facebook|m\.facebook|facebook|fb)\.(?:com|me|watch)\/[\w@\/]+)/i,
                 downloader: FacebookDl,
             },
             {
@@ -55,7 +55,7 @@ client.addEventHandler(
                 const toDel = await client.sendMessage(update.chatId!, {
                     message: "Loading ...",
                 });
-                const video = (await r.downloader(url[0])) as string;
+                const video = (await r.downloader(url[1])) as string;
 
                 try {
                     await client.sendMessage(update.chatId!, {
@@ -76,7 +76,7 @@ client.addEventHandler(
         }
     },
     new NewMessage({
-        async func(ctx) {
+        func(ctx) {
             const condition =
                 ctx.message.entities?.some(
                     (c) => c.className === "MessageEntityUrl"
@@ -85,7 +85,7 @@ client.addEventHandler(
             console.log(condition);
 
             if (!condition)
-                await client.sendMessage(ctx.chatId!, {
+                client.sendMessage(ctx.chatId!, {
                     message:
                         "<b>Usage ❓️</b>:\nPaste the video link here.\ne.g. \n<pre>https://youtu.be/exam-ple/</pre>\n\n<b>Supported Links 🔗</b>:\n<i>Tiktok / Youtube / Instagram / Facebook</i>",
                     parseMode: "html",
