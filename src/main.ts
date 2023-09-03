@@ -3,7 +3,7 @@ import {
     NewMessageEvent,
     StringSession,
     TelegramClient,
-} from "https://deno.land/x/grm/mod.ts";
+} from "https://deno.land/x/grm@0.8.2/mod.ts";
 import { FacebookDl } from "./utils/fbDl.ts";
 import { InstagramDl } from "./utils/igDl.ts";
 import { TiktokDl } from "./utils/ttDl.ts";

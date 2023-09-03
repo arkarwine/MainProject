@@ -1,14 +1,9 @@
-import {
-    Innertube,
-    UniversalCache,
-} from "https://deno.land/x/youtubei@v6.2.0-deno/deno.ts";
+const format = "ba[ext=m4a]";
+const yturl = "7PYe57MwxPI";
 
-const client = await Innertube.create({
-    cache: new UniversalCache(true, "."),
+const cmd = new Deno.Command("yt-dlp", {
+    args: ["-f", format, "--get-url", yturl],
 });
+const { stdout } = await cmd.output();
 
-const res = await client.getInfo("NkBjYXPJwj4");
-
-Deno.writeTextFile("res.json", JSON.stringify(res));
-
-console.log(res.streaming_data);
+console.log(new TextDecoder().decode(stdout));
