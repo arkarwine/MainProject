@@ -1,9 +1,5 @@
-const format = "ba[ext=m4a]";
-const yturl = "7PYe57MwxPI";
+import { escapeHtml } from "https://deno.land/x/escape/mod.ts";
 
-const cmd = new Deno.Command("yt-dlp", {
-    args: ["-f", format, "--get-url", yturl],
-});
-const { stdout } = await cmd.output();
+const res = `<a href="https://rr1---sn-vvgxqvvht5oh5g-hqal.googlevideo.com/videoplayback?expire=1693828403&ei=03D1ZLm_Bve39fwPtu6K6AY&ip=69.160.18.190&id=o-AEtxFmONVKrpNSBxNcS1n4MtZU275AbLo-_yQmb6eVKt&itag=140&source=youtube&requiressl=yes&mh=l5&mm=31%2C29&mn=sn-vvgxqvvht5oh5g-hqal%2Csn-npoeenll&ms=au%2Crdu&mv=m&mvi=1&pcm2cms=yes&pl=24&initcwndbps=255000&vprv=1&svpuc=1&mime=audio%2Fmp4&gir=yes&clen=3400914&dur=210.094&lmt=1621581979477083&mt=1693806340&fvip=4&keepalive=yes&fexp=24007246%2C24363391&c=IOS&txp=5311224&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgKRqE9MWH9MUqFaytsenh602PO07PeraBUMKfvVQ7zX8CIQDDw5G3Zne2IkCYqyrW4s_g2fJRzIXBnHDiK5llFEcojw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgT-LpvlXKLFFjG72fXX8_uEeyNwcPgzAOsGKKFHQZnFYCIQCn3fMSZw_yIbCegZoD_NCB--tz2fxntgZxGptGW2vmzw%3D%3D">Direct Download Link<a>`;
 
-console.log(new TextDecoder().decode(stdout));
+console.log("🚀 ~ file: main.ts:5 ~ res:", escapeHtml(res));

@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "serve": "deno run --allow-net --allow-env ./src/main.ts",
-        "test": "deno run --allow-net --allow-write --allow-env ./src/test/test.ts"
+        "serve": "deno run --allow-all ./src/main.ts",
+        "test": "deno run --allow-all ./src/test/test.ts"
     }
 }

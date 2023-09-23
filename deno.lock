@@ -283,6 +283,7 @@
     "https://deno.land/x/dryptography@v0.1.4/aes/utils/words.ts": "4aedc59632e05b0ab747e9cf705667430a3d4d52f2241e6aa7426bde929c3484",
     "https://deno.land/x/dryptography@v0.1.4/utils/converters.ts": "0f6a233bb2a7b72d493c62cf39c04b1a9a1f36b261ba5bafc1e9f7ffa605c573",
     "https://deno.land/x/dryptography@v0.1.4/utils/mod.ts": "8c6a17c9827ca6c3d2243fd25527b5d90b2473606cdf011c3c5430ca7da11ff0",
+    "https://deno.land/x/escape@1.4.2/mod.ts": "6a30f506583e5d3bcc5f3cd2d42fba43af618833dc0f7754b374b6f7b21aaf68",
     "https://deno.land/x/events@v1.0.0/mod.ts": "3e2655ffa5e86a6ee01022f964b7fdc6152c007106c47b02958e766c6614dbaf",
     "https://deno.land/x/grammy@v1.16.0/bot.ts": "885e3b11a5bb16f923dc09d9351bdf2d2bda8cb29dc1c85d0c3930d59b256f68",
     "https://deno.land/x/grammy@v1.16.0/composer.ts": "1d2e164f9934466553d7f9bf9bf2fe65a1f453b7f7ce3cf57066d87382c6dac2",

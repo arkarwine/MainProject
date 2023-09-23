@@ -13,7 +13,7 @@ const BOT_TOKEN = "5618691960:AAETR5IfqyZOIcZ5Cgst1KX8JYY7wpighU0"; // put your 
 
 const client = new TelegramClient(
     new StringSession(
-        "1BQANOTEuMTA4LjU2LjE2MQG7ClrL+PYtTGBhFOaCI3mrh4+VcLbEIbotpEEWFySnTGo3POOmFvx2zG6wjR9D2Jlhr9+DTbGKkYk7B8x6gNwDgSdQhHtPj1FTGOcnG0i3qwlmsBHGl7lrcQ0lUnwuj+NQ0O+RyAVtQwf1+EFlNGet+yZE7lZrMkZwaf5iiM3E8S4xhXVLnPpn1ozg8h5daWh8ANN94YiXaZOEvylX2I0C0m5ob8+F/b7oQf67MOGtDKXva5m20jFreQYunxt04G765sg7W7LFubuz5yPHtGFTuzIDp/iVOy/MNcW+S6pOEmIYGEnCgwVzpFo8hcfx935OD31f5FwcT/lhKje5/nK7jg=="
+        "1BQANOTEuMTA4LjU2LjE4OQG7mquGjxaY5yJZ4eYUOmXE2AuJmwk1D0tFo8ubz0m62ke8SzMjyvHaM27lTcL0zHpugagfn0f1fTiuIJrOYK5BkvqbJzSvyBNSY9Bb47muohE/FR6oYeAsPRWgKL/80/NwYyhtN9o5ug6uDBP9Aom00AEUefaEQelyHNDnDAXIcjbvuRbg80G5iAX3LXataAdOtDqbFhZCtbJ67oITV6dEcx0nwt0cR+AS1iiYp5BfMS3F1dwY+YfcNQbVkstjryKxSjCT1mJpoAkh2nbPsumRlbhbF8VBezg2uKQo6jTkAwsU5jSEZYgjO6+9rQm2itRIjWVTCv/aJtsX+RSc1BxmQQ=="
     ),
     22444092,
     "bc6c9d84db95809f59bb96af90ccffd3",
@@ -55,7 +55,9 @@ client.addEventHandler(
                 const toDel = await client.sendMessage(update.chatId!, {
                     message: "Loading ...",
                 });
-                const video = (await r.downloader(url[1])) as string;
+                const video = encodeURI((await r.downloader(url[1])) as string);
+
+                console.log(`<a href="${video}">Direct Download Link</a>`);
 
                 try {
                     await client.sendMessage(update.chatId!, {
